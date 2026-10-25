@@ -1,244 +1,630 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StoryMaker ♡</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7e9e2">
+<title>StoryMaker — Instagram Story Studio</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#fff8f5;color:#493638;font-family:Arial,sans-serif}
-header{text-align:center;padding:25px 12px}
-h1{color:#c87891;font-size:34px;margin:0}
-header p{color:#967d7d}
-main{max-width:1050px;margin:auto;padding:15px}
-.layout{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.panel{background:white;border:1px solid #f0dcd9;border-radius:20px;padding:20px;box-shadow:0 8px 25px #6a3e3510}
-h2{font-size:18px}
-label{display:block;font-size:13px;font-weight:bold;margin:14px 0 6px}
-input,textarea,select{width:100%;padding:11px;border:1px solid #ead6d3;border-radius:10px;background:#fffaf8;color:#493638}
-textarea{resize:vertical;min-height:65px}
-button{border:0;border-radius:11px;padding:11px 14px;background:#d88ca2;color:white;font-weight:bold;cursor:pointer;margin:5px 3px 5px 0}
-button.secondary{background:#f8e5e9;color:#8d5266}
-button:hover{opacity:.85}
-#story{width:100%;max-width:340px;aspect-ratio:9/16;margin:auto;border-radius:20px;overflow:hidden;background:linear-gradient(145deg,#f3d5df,#faeee1);display:flex;align-items:center;justify-content:center;text-align:center;position:relative}
-#content{padding:9%;width:100%;white-space:pre-wrap;overflow-wrap:anywhere}
-#kickerOut{font-size:11px;letter-spacing:3px;margin-bottom:22px}
-#titleOut{font-family:Georgia,serif;font-size:37px;line-height:1.1}
-#subOut{font-size:14px;margin-top:20px;line-height:1.5}
-#stickerOut{font-size:35px;margin:15px}
-#photoOut{max-width:100%;max-height:220px;object-fit:cover;border-radius:12px;display:none;margin:12px auto}
-.footer{position:absolute;bottom:12px;left:0;right:0;font-size:10px;opacity:.65}
-.templates{display:flex;flex-wrap:wrap;gap:5px}
-.swatches{display:flex;gap:10px;margin-top:8px}
-.swatch{width:32px;height:32px;border-radius:50%;border:2px solid white;box-shadow:0 0 0 1px #ddd;cursor:pointer}
-.note{font-size:12px;color:#967d7d;line-height:1.5}
-@media(max-width:700px){.layout{grid-template-columns:1fr}#story{max-width:300px}}
+:root {
+  --bg:#fffaf7; --ink:#342b2b; --muted:#887b78;
+  --pink:#e9a8b6; --pink2:#f7dce1; --beige:#ead8c9;
+  --line:#efdfd8; --white:#fff;
+}
+* { box-sizing:border-box }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+button,input,textarea { font:inherit }
+button { cursor:pointer; border:0 }
+header {
+  padding:18px clamp(16px,4vw,42px); display:flex;
+  align-items:center; justify-content:space-between;
+  border-bottom:1px solid var(--line); background:#fffaf7;
+  position:sticky; top:0; z-index:5;
+}
+.brand { font-weight:850; font-size:21px }
+.brand span { color:#c66f86 }
+.tag,.small { font-size:12px; color:var(--muted) }
+main { max-width:1180px; margin:auto; padding:26px 20px 48px }
+.intro { margin:6px 0 24px }
+.eyebrow { letter-spacing:2px; color:#bb7585; font-weight:800; font-size:10px }
+h1 { font-size:clamp(27px,4vw,42px); line-height:1.05 }
+.intro p { color:var(--muted); max-width:660px }
+.workspace {
+  display:grid; grid-template-columns:minmax(260px,340px)
+  minmax(280px,1fr) minmax(230px,285px);
+  gap:18px; align-items:start;
+}
+.panel {
+  background:white; border:1px solid var(--line);
+  border-radius:22px; padding:17px;
+  box-shadow:0 12px 35px #5c33200d;
+}
+.panel h2 { font-size:14px; margin:0 0 14px }
+.tabs { display:flex; gap:5px; background:#f8efeb; border-radius:12px; padding:4px }
+.tab { flex:1; padding:9px 4px; background:transparent; border-radius:9px; font-size:12px }
+.tab.active { background:white; font-weight:750 }
+.section { display:none; margin-top:14px }
+.section.active { display:block }
+.field { margin:13px 0 }
+.field label { display:block; font-size:12px; font-weight:750; margin-bottom:6px }
+.field input,.field textarea,.field select {
+  width:100%; border:1px solid var(--line); background:#fffdfb;
+  border-radius:11px; padding:10px; color:var(--ink);
+}
+.field textarea { min-height:75px; resize:vertical }
+.btn {
+  border-radius:12px; padding:11px 13px; font-weight:750;
+  font-size:12px; background:#f7f0ec; color:#604d48;
+}
+.primary { background:#d9879b; color:white }
+.soft { background:#fae9ed; color:#875365 }
+.wide { width:100% }
+.btnrow { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px }
+.btnrow .btn { flex:1 }
+.templates { display:grid; grid-template-columns:repeat(3,1fr); gap:9px }
+.template { padding:0; background:none; text-align:left; color:var(--ink) }
+.thumb {
+  aspect-ratio:9/14; border-radius:11px; border:1px solid #eadbd5;
+  display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:8px; font-size:11px; font-weight:800;
+  white-space:pre-line;
+}
+.template.active .thumb { outline:2px solid #d9879b }
+.template small { display:block; font-size:10px; margin-top:5px; color:var(--muted) }
+.swatches { display:flex; gap:9px; flex-wrap:wrap }
+.swatch {
+  width:29px; height:29px; border-radius:50%;
+  border:2px solid white; box-shadow:0 0 0 1px #e9d9d3;
+}
+.swatch.selected { box-shadow:0 0 0 2px #bd7889 }
+.choice { display:flex; gap:6px; flex-wrap:wrap }
+.choice button {
+  border:1px solid var(--line); background:#fffaf7;
+  color:#6e5752; border-radius:99px; padding:7px 9px; font-size:11px;
+}
+.choice button.selected { background:#f4d8df; border-color:#d9879b }
+.center { display:flex; flex-direction:column; align-items:center; gap:14px }
+.canvas-top { display:flex; justify-content:space-between; width:100%; font-size:13px }
+.story-wrap {
+  width:min(100%,350px); padding:8px; background:white;
+  border:1px solid var(--line); border-radius:27px;
+}
+#story {
+  position:relative; width:100%; aspect-ratio:9/16; overflow:hidden;
+  border-radius:20px; background:linear-gradient(145deg,#f3d9df,#faeee4);
+}
+.story-bg { position:absolute; inset:0; background:linear-gradient(145deg,#f3d9df,#faeee4) }
+.orb { position:absolute; border-radius:50%; opacity:.55 }
+.orb.one { width:65%; aspect-ratio:1; right:-20%; top:-6%; background:#fff8ef }
+.orb.two { width:80%; aspect-ratio:1; left:-30%; bottom:-9%; background:#e8b7c1 }
+.story-inner {
+  position:absolute; inset:7%; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center; gap:12px;
+}
+.story-kicker { font-size:11px; letter-spacing:2px; font-weight:800 }
+.story-title {
+  font-family:Georgia,serif; font-size:clamp(25px,7vw,44px);
+  line-height:1.06; overflow-wrap:anywhere; white-space:pre-wrap;
+}
+.story-sub { font-size:14px; line-height:1.4; white-space:pre-wrap; overflow-wrap:anywhere }
+.story-sticker { font-size:38px }
+.story-photo {
+  width:100%; max-width:100%; max-height:35%;
+  object-fit:contain; border-radius:13px; display:none;
+}
+.story-footer {
+  position:absolute; bottom:3%; left:7%; right:7%;
+  display:flex; justify-content:space-between; font-size:9px; opacity:.65;
+}
+.notice { text-align:center; color:var(--muted); font-size:11px; max-width:330px }
+.right-stack { display:grid; gap:14px }
+.game-card { border:1px solid var(--line); border-radius:13px; padding:12px; margin-bottom:8px }
+.game-card strong { font-size:12px; display:block; margin-bottom:8px }
+footer { text-align:center; padding:20px; color:#a28f89; font-size:11px }
+@media(max-width:940px) {
+  .workspace { grid-template-columns:1fr 1fr }
+  .right-stack { grid-column:1/-1; grid-template-columns:1fr 1fr }
+}
+@media(max-width:620px) {
+  header { padding:14px }
+  main { padding:20px 12px 34px }
+  .workspace { grid-template-columns:1fr }
+  .center { grid-row:1 }
+  .story-wrap { width:min(82%,320px) }
+  .right-stack { grid-column:auto; grid-template-columns:1fr }
+}
 </style>
 </head>
 <body>
 <header>
-  <h1>StoryMaker ♡</h1>
-  <p>Make your story a whole vibe.</p>
+  <div>
+    <div class="brand">story<span>maker</span> ✿</div>
+    <div class="tag">deine Story. dein Vibe.</div>
+  </div>
+  <button class="btn primary" id="topExport">Story exportieren ↗</button>
 </header>
 
 <main>
-<div class="layout">
-<section class="panel">
-<h2>🎀 Gestalte deine Story</h2>
-
-<label>Vorlage</label>
-<div class="templates">
-<button class="secondary" onclick="preset('quote')">Soft Quote</button>
-<button class="secondary" onclick="preset('poll')">This or That</button>
-<button class="secondary" onclick="preset('birthday')">Birthday</button>
-<button class="secondary" onclick="preset('mood')">Current Mood</button>
-<button class="secondary" onclick="preset('game')">Story Game</button>
-</div>
-
-<label>Überschrift</label>
-<input id="kicker" value="A LITTLE REMINDER" oninput="render()">
-
-<label>Dein Haupttext</label>
-<textarea id="title" oninput="render()">you are allowed to grow at your own pace.</textarea>
-
-<label>Zusatztext</label>
-<textarea id="sub" oninput="render()">save this for a day you need it ♡</textarea>
-
-<label>Sticker</label>
-<select id="sticker" onchange="render()">
-<option>♡</option>
-<option>✦</option>
-<option>✿</option>
-<option>☁</option>
-<option>🎀</option>
-<option>✨</option>
-<option>🤍</option>
-<option>☀️</option>
-<option>Keiner</option>
-</select>
-
-<label>Schriftgröße</label>
-<input id="size" type="range" min="22" max="55" value="37" oninput="render()">
-
-<label>Textausrichtung</label>
-<select id="align" onchange="render()">
-<option value="center">Zentriert</option>
-<option value="left">Links</option>
-<option value="right">Rechts</option>
-</select>
-
-<label>Hintergrundfarbe</label>
-<div class="swatches">
-<div class="swatch" style="background:linear-gradient(135deg,#f3d5df 50%,#faeee1 50%)" onclick="setColors('#f3d5df','#faeee1','#493638')"></div>
-<div class="swatch" style="background:linear-gradient(135deg,#e7d3bd 50%,#faf1e5 50%)" onclick="setColors('#e7d3bd','#faf1e5','#574438')"></div>
-<div class="swatch" style="background:linear-gradient(135deg,#d9c9eb 50%,#f5eafa 50%)" onclick="setColors('#d9c9eb','#f5eafa','#493b5b')"></div>
-<div class="swatch" style="background:linear-gradient(135deg,#cbd8c6 50%,#f1eee2 50%)" onclick="setColors('#cbd8c6','#f1eee2','#3e5141')"></div>
-<div class="swatch" style="background:linear-gradient(135deg,#302a35 50%,#594352 50%)" onclick="setColors('#302a35','#594352','#fff1e8')"></div>
-</div>
-
-<label>Eigenes Foto</label>
-<input type="file" id="photo" accept="image/*" onchange="loadPhoto(event)">
-<p class="note">Dein Foto wird lokal im Browser verarbeitet.</p>
-
-<button onclick="downloadStory()">↓ Story herunterladen</button>
-<button class="secondary" onclick="copyCaption()">Caption kopieren</button>
-<button class="secondary" onclick="resetStory()">Zurücksetzen</button>
+<section class="intro">
+  <div class="eyebrow">INSTAGRAM STORY STUDIO</div>
+  <h1>Make it a <span style="color:#cc8294;font-family:Georgia,serif;font-style:italic">whole vibe.</span></h1>
+  <p>Gestalte ästhetische Stories mit Vorlagen, Farben, Fotos und Story-Games. Kostenlos und direkt im Browser.</p>
 </section>
 
-<section class="panel">
-<h2>✨ Live-Vorschau</h2>
-<div id="story">
-<div id="content">
-<div id="kickerOut">A LITTLE REMINDER</div>
-<img id="photoOut" alt="Dein Foto">
-<div id="stickerOut">♡</div>
-<div id="titleOut">you are allowed to grow at your own pace.</div>
-<div id="subOut">save this for a day you need it ♡</div>
-</div>
-<div class="footer">@yourhandle · made with StoryMaker ♡</div>
-</div>
+<div class="workspace">
+<aside class="panel">
+  <h2>Dein Story-Editor</h2>
+  <div class="tabs">
+    <button class="tab active" data-tab="design">Design</button>
+    <button class="tab" data-tab="text">Text</button>
+    <button class="tab" data-tab="photo">Foto</button>
+  </div>
 
-<p class="note">Dein Design wird im Instagram-Story-Format 9:16 exportiert.</p>
+  <div id="design" class="section active">
+    <div class="field">
+      <label>Vorlage auswählen</label>
+      <div class="templates" id="templates">
+        <button class="template active" data-template="quote"><div class="thumb" style="background:#f2d3dc">little<br>reminder ♡</div><small>Soft Quote</small></button>
+        <button class="template" data-template="poll"><div class="thumb" style="background:#e8c5cf">THIS<br>OR THAT?</div><small>Umfrage</small></button>
+        <button class="template" data-template="dump"><div class="thumb" style="background:#d6c3ae">PHOTO<br>DUMP ✷</div><small>Photo Dump</small></button>
+        <button class="template" data-template="birthday"><div class="thumb" style="background:#f5c7d0">IT'S MY<br>BIRTHDAY!</div><small>Birthday</small></button>
+        <button class="template" data-template="mood"><div class="thumb" style="background:#d9c5b9">CURRENT<br>MOOD ☁</div><small>Mood</small></button>
+        <button class="template" data-template="game"><div class="thumb" style="background:#e7b8c5">WHO KNOWS<br>ME BEST?</div><small>Story Game</small></button>
+        <button class="template" data-template="travel"><div class="thumb" style="background:#b8d8d5">POSTCARD<br>FROM…</div><small>Travel Diary</small></button>
+        <button class="template" data-template="playlist"><div class="thumb" style="background:#c9c5e8">ON REPEAT<br>♫</div><small>Playlist</small></button>
+        <button class="template" data-template="wishlist"><div class="thumb" style="background:#f0d4a8">LITTLE<br>WISHLIST</div><small>Wishlist</small></button>
+        <button class="template" data-template="recap"><div class="thumb" style="background:#d7c7b7">LIFE LATELY<br>✷</div><small>Life Lately</small></button>
+        <button class="template" data-template="goals"><div class="thumb" style="background:#cbd8c6">GOALS<br>THIS MONTH</div><small>Monatsziele</small></button>
+        <button class="template" data-template="favorites"><div class="thumb" style="background:#f3c6cc">CURRENT<br>FAVOURITES</div><small>Favoriten</small></button>
+        <button class="template" data-template="qna"><div class="thumb" style="background:#d2dff0">ASK ME<br>ANYTHING</div><small>Q&A</small></button>
+        <button class="template" data-template="checklist"><div class="thumb" style="background:#e8d8b8">SUNDAY<br>RESET</div><small>Checkliste</small></button>
+      </div>
+    </div>
 
-<h2>♡ Caption & Hashtags</h2>
-<textarea id="caption">a little reminder for your feed ♡ save it for later</textarea>
-<input id="hashtags" value="#aesthetic #instagramstory #storymaker">
-<button onclick="copyAll()">Caption + Hashtags kopieren</button>
+    <div class="field">
+      <label>Farbpalette</label>
+      <div class="swatches">
+        <button class="swatch selected" title="Rosé" data-colors="#f3d9df,#faeee4,#5b3c43" style="background:#f3d9df"></button>
+        <button class="swatch" title="Latte" data-colors="#e4d2bf,#f8eee2,#554237" style="background:#e4d2bf"></button>
+        <button class="swatch" title="Lavender" data-colors="#d9c9eb,#f5eafa,#493b5b" style="background:#d9c9eb"></button>
+        <button class="swatch" title="Sage" data-colors="#cbd8c6,#f1eee2,#3e5141" style="background:#cbd8c6"></button>
+        <button class="swatch" title="Night" data-colors="#302a35,#594352,#fff1e8" style="background:#302a35"></button>
+        <button class="swatch" title="Ocean" data-colors="#b8d8e8,#e7f2f5,#244858" style="background:#b8d8e8"></button>
+        <button class="swatch" title="Butter" data-colors="#f5df9b,#fff5d9,#594b27" style="background:#f5df9b"></button>
+        <button class="swatch" title="Cherry" data-colors="#a9364f,#f4c6cc,#fff4ed" style="background:#a9364f"></button>
+        <button class="swatch" title="Matcha" data-colors="#a8b99a,#e5eadb,#344333" style="background:#a8b99a"></button>
+        <button class="swatch" title="Sky" data-colors="#c4d9f3,#f0f5ff,#354968" style="background:#c4d9f3"></button>
+        <button class="swatch" title="Sunset" data-colors="#f2a57e,#f7d9a8,#653d3d" style="background:#f2a57e"></button>
+      </div>
+    </div>
 
-<h2>🎲 Story-Ideen</h2>
-<button class="secondary" onclick="game('THIS OR THAT?','Coffee ☕  /  Matcha 🍵','Welche Seite bist du?')">This or That</button>
-<button class="secondary" onclick="game('WHO KNOWS ME BEST?','Bestie 💗  /  Familie 🫶','Markiere deine Person!')">Wer kennt mich?</button>
-<button class="secondary" onclick="game('CURRENT MOOD','Soft girl 🎀','Was ist dein aktueller Vibe?')">Current Mood</button>
-<p class="note">Tipp: Füge echte Instagram-Umfrage-Sticker nach dem Hochladen in Instagram hinzu.</p>
+    <div class="field">
+      <label>Sticker</label>
+      <div class="choice">
+        <button class="selected" data-sticker="♡">♡ Herz</button>
+        <button data-sticker="✦">✦ Sparkle</button>
+        <button data-sticker="☁">☁ Cloud</button>
+        <button data-sticker="✿">✿ Flower</button>
+        <button data-sticker="">Keiner</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="text" class="section">
+    <div class="field"><label>Kleine Überschrift</label><input id="kicker" value="A LITTLE REMINDER"></div>
+    <div class="field"><label>Haupttext</label><textarea id="titleText">you are allowed to grow at your own pace.</textarea></div>
+    <div class="field"><label>Zusatztext</label><textarea id="subText">save this for a day you need it ♡</textarea></div>
+    <div class="field">
+      <label>Schriftgröße</label>
+      <input id="fontSize" type="range" min="24" max="58" value="44">
+      <span id="fontValue" class="small">44</span>
+    </div>
+    <div class="field">
+      <label>Ausrichtung</label>
+      <div class="choice">
+        <button class="selected" data-align="center">Zentriert</button>
+        <button data-align="left">Links</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="photo" class="section">
+    <div class="field">
+      <label>Eigenes Foto hinzufügen</label>
+      <input id="photoInput" type="file" accept="image/*">
+      <p class="small">Dein Foto bleibt auf deinem Gerät.</p>
+    </div>
+    <div class="field">
+      <label>Foto-Anzeige</label>
+      <div class="choice">
+        <button class="selected" data-fit="contain">Ganzes Foto</button>
+        <button data-fit="cover">Ausfüllen</button>
+      </div>
+      <p class="small">Das Foto wird nicht gestreckt. Beim Ausfüllen können Ränder abgeschnitten werden.</p>
+    </div>
+    <div class="field">
+      <label>Story-Rahmen</label>
+      <div class="choice">
+        <button class="selected" data-frame="none">Keiner</button>
+        <button data-frame="thin">Fein</button>
+        <button data-frame="double">Doppelt</button>
+      </div>
+    </div>
+    <button class="btn" id="removePhoto">Foto entfernen</button>
+  </div>
+
+  <div class="btnrow">
+    <button class="btn" id="reset">Zurücksetzen</button>
+    <button class="btn primary" id="export">PNG herunterladen ↓</button>
+  </div>
+</aside>
+
+<section class="center">
+  <div class="canvas-top"><strong>Live-Vorschau</strong><span>9:16 · Instagram Story</span></div>
+  <div class="story-wrap">
+    <div id="story">
+      <div class="story-bg" id="storyBg"></div>
+      <div class="orb one" id="orb1"></div>
+      <div class="orb two" id="orb2"></div>
+      <div class="story-inner" id="storyInner">
+        <div class="story-kicker" id="outKicker">A LITTLE REMINDER</div>
+        <img id="outPhoto" class="story-photo" alt="Dein Story-Foto">
+        <div class="story-sticker" id="outSticker">♡</div>
+        <div class="story-title" id="outTitle">you are allowed to grow at your own pace.</div>
+        <div class="story-sub" id="outSub">save this for a day you need it ♡</div>
+      </div>
+      <div class="story-footer"><span>@yourhandle</span><span>made with storymaker ✿</span></div>
+    </div>
+  </div>
+  <button class="btn primary wide" id="export2">♡ Story herunterladen</button>
+  <div class="notice">Deine Story wird als PNG-Datei gespeichert.</div>
 </section>
+
+<aside class="right-stack">
+  <section class="panel">
+    <h2>✦ Story-Spiel Generator</h2>
+    <p class="small">Die Abstimmung kannst du nach dem Export in Instagram ergänzen.</p>
+    <div class="game-card">
+      <strong>THIS OR THAT</strong>
+      <div class="choice" id="thisThat">
+        <button data-a="Coffee ☕" class="selected">Coffee ☕</button>
+        <button data-a="Matcha 🍵">Matcha 🍵</button>
+      </div>
+    </div>
+    <div class="game-card">
+      <strong>WER KENNT MICH BESSER?</strong>
+      <div class="choice" id="knowMe">
+        <button data-a="Bestie 💗" class="selected">Bestie 💗</button>
+        <button data-a="Familie 🫶">Familie 🫶</button>
+      </div>
+    </div>
+    <div class="game-card">
+      <strong>MEIN AKTUELLER VIBE</strong>
+      <div class="choice" id="moodChoice">
+        <button data-a="Soft girl 🎀" class="selected">Soft girl 🎀</button>
+        <button data-a="Main character ✨">Main character ✨</button>
+        <button data-a="Cozy era ☁">Cozy era ☁</button>
+      </div>
+    </div>
+    <button class="btn soft wide" id="useGame">Auswahl in Story übernehmen ↗</button>
+  </section>
+  <section class="panel">
+    <h2>♡ Idee für dein Instagram</h2>
+    <p class="small">Zeige in einem Reel, wie du in wenigen Sekunden eine eigene ästhetische Story erstellst.</p>
+  </section>
+</aside>
 </div>
 </main>
 
-<script>
-let bg1='#f3d5df',bg2='#faeee1',fg='#493638',photoURL='';
+<footer>StoryMaker · Kostenloses Browser-Tool · Deine Bilder bleiben auf deinem Gerät.</footer>
 
-function render(){
- document.getElementById('kickerOut').textContent=document.getElementById('kicker').value;
- document.getElementById('titleOut').textContent=document.getElementById('title').value;
- document.getElementById('subOut').textContent=document.getElementById('sub').value;
- document.getElementById('stickerOut').textContent=document.getElementById('sticker').value==='Keiner'?'':document.getElementById('sticker').value;
- document.getElementById('titleOut').style.fontSize=document.getElementById('size').value+'px';
- document.getElementById('content').style.textAlign=document.getElementById('align').value;
- document.getElementById('story').style.background=`linear-gradient(145deg,${bg1},${bg2})`;
- document.getElementById('story').style.color=fg;
+<script>
+const $ = id => document.getElementById(id);
+
+let colors = ['#f3d9df','#faeee4','#5b3c43'];
+let sticker = '♡';
+let align = 'center';
+let photoUrl = '';
+let photoFit = 'contain';
+let frame = 'none';
+
+const presets = {
+  quote:['A LITTLE REMINDER','you are allowed to grow at your own pace.','save this for a day you need it ♡','♡'],
+  poll:['THIS OR THAT?','coffee or matcha?','vote in my next story ☕🍵','✦'],
+  dump:['LITTLE MOMENTS','a little photo dump','lately, in little pieces ✷','✿'],
+  birthday:['IT’S MY DAY','birthday girl energy','another trip around the sun ♡','🎀'],
+  mood:['CURRENT MOOD','in my soft era','protecting my peace ☁','☁'],
+  game:['LET’S PLAY','who knows me best?','answer with the Instagram question sticker ♡','♡'],
+  travel:['POSTCARD FROM…','wish you were here','collecting moments, not things ✈','✈'],
+  playlist:['ON REPEAT ♫','songs for this chapter','currently living in these songs','♫'],
+  wishlist:['LITTLE WISHLIST','things that make me happy','a few things on my mind ♡','✧'],
+  recap:['LIFE LATELY','little moments, big feelings','a tiny recap of lately ✷','✷'],
+  goals:['NEW MONTH, NEW ENERGY','my little goals','slow progress is still progress ✓','✿'],
+  favorites:['CURRENT FAVOURITES','things I’m loving lately','consider this your sign to try them','♡'],
+  qna:['ASK ME ANYTHING','your turn to ask','drop a question below ↓','✉'],
+  checklist:['SUNDAY RESET','a fresh start','tidy space · clean sheets · slow morning','☁']
+};
+
+function render() {
+  $('storyBg').style.background = `linear-gradient(145deg,${colors[0]},${colors[1]})`;
+  $('orb1').style.background = colors[1];
+  $('orb2').style.background = colors[0];
+  $('story').style.color = colors[2];
+  $('outKicker').textContent = $('kicker').value;
+  $('outTitle').textContent = $('titleText').value;
+  $('outSub').textContent = $('subText').value;
+  $('outSticker').textContent = sticker;
+  $('outTitle').style.fontSize = $('fontSize').value + 'px';
+  $('fontValue').textContent = $('fontSize').value;
+  $('storyInner').style.textAlign = align;
+  $('storyInner').style.alignItems = align === 'left' ? 'flex-start' : 'center';
+  $('outPhoto').style.display = photoUrl ? 'block' : 'none';
+  $('outPhoto').style.objectFit = photoFit;
+  if (photoUrl) $('outPhoto').src = photoUrl;
+  $('story').style.boxShadow = frame === 'none' ? 'none' :
+    frame === 'thin' ? `inset 0 0 0 7px ${colors[2]}` :
+    `inset 0 0 0 7px ${colors[2]}, inset 0 0 0 18px transparent`;
 }
-function setColors(a,b,c){bg1=a;bg2=b;fg=c;render()}
-function preset(type){
- const presets={
- quote:['A LITTLE REMINDER','you are allowed to grow at your own pace.','save this for a day you need it ♡','♡'],
- poll:['THIS OR THAT?','coffee or matcha?','vote in my next story ☕🍵','✦'],
- birthday:['IT’S MY DAY','birthday girl energy','another trip around the sun ♡','🎀'],
- mood:['CURRENT MOOD','in my soft era','protecting my peace ☁','☁'],
- game:['LET’S PLAY','who knows me best?','answer in my next story ♡','✿']
- };
- const p=presets[type];
- document.getElementById('kicker').value=p[0];
- document.getElementById('title').value=p[1];
- document.getElementById('sub').value=p[2];
- document.getElementById('sticker').value=p[3];
- render();
+
+document.querySelectorAll('.tab').forEach(button => {
+  button.onclick = () => {
+    document.querySelectorAll('.tab').forEach(item => item.classList.toggle('active',item === button));
+    document.querySelectorAll('.section').forEach(item => item.classList.toggle('active',item.id === button.dataset.tab));
+  };
+});
+
+document.querySelectorAll('.template').forEach(button => {
+  button.onclick = () => {
+    const preset = presets[button.dataset.template];
+    document.querySelectorAll('.template').forEach(item => item.classList.toggle('active',item === button));
+    $('kicker').value = preset[0];
+    $('titleText').value = preset[1];
+    $('subText').value = preset[2];
+    sticker = preset[3];
+    document.querySelectorAll('[data-sticker]').forEach(item => item.classList.toggle('selected',item.dataset.sticker === sticker));
+    render();
+  };
+});
+
+document.querySelectorAll('.swatch').forEach(button => {
+  button.onclick = () => {
+    colors = button.dataset.colors.split(',');
+    document.querySelectorAll('.swatch').forEach(item => item.classList.toggle('selected',item === button));
+    render();
+  };
+});
+
+document.querySelectorAll('[data-fit]').forEach(button => {
+  button.onclick = () => {
+    photoFit = button.dataset.fit;
+    document.querySelectorAll('[data-fit]').forEach(item => item.classList.toggle('selected',item === button));
+    render();
+  };
+});
+
+document.querySelectorAll('[data-frame]').forEach(button => {
+  button.onclick = () => {
+    frame = button.dataset.frame;
+    document.querySelectorAll('[data-frame]').forEach(item => item.classList.toggle('selected',item === button));
+    render();
+  };
+});
+
+document.querySelectorAll('[data-sticker]').forEach(button => {
+  button.onclick = () => {
+    sticker = button.dataset.sticker;
+    document.querySelectorAll('[data-sticker]').forEach(item => item.classList.toggle('selected',item === button));
+    render();
+  };
+});
+
+['kicker','titleText','subText','fontSize'].forEach(id => $(id).addEventListener('input',render));
+
+document.querySelectorAll('[data-align]').forEach(button => {
+  button.onclick = () => {
+    align = button.dataset.align;
+    document.querySelectorAll('[data-align]').forEach(item => item.classList.toggle('selected',item === button));
+    render();
+  };
+});
+
+$('photoInput').onchange = event => {
+  const file = event.target.files[0];
+  if (!file) return;
+  if (photoUrl) URL.revokeObjectURL(photoUrl);
+  photoUrl = URL.createObjectURL(file);
+  render();
+};
+
+$('removePhoto').onclick = () => {
+  if (photoUrl) URL.revokeObjectURL(photoUrl);
+  photoUrl = '';
+  $('photoInput').value = '';
+  render();
+};
+
+document.querySelectorAll('#thisThat .choice button,#knowMe .choice button,#moodChoice .choice button').forEach(button => {
+  button.onclick = () => {
+    button.parentElement.querySelectorAll('button').forEach(item => item.classList.toggle('selected',item === button));
+  };
+});
+
+$('useGame').onclick = () => {
+  const a = $('thisThat').querySelector('.selected').dataset.a;
+  const b = $('knowMe').querySelector('.selected').dataset.a;
+  const c = $('moodChoice').querySelector('.selected').dataset.a;
+  $('kicker').value = 'LET’S PLAY';
+  $('titleText').value = 'THIS OR THAT?';
+  $('subText').value = a + ' / ' + b + '\nMy vibe: ' + c;
+  sticker = '✦';
+  render();
+  document.querySelector('[data-tab="text"]').click();
+};
+
+async function exportPng() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 1080;
+  canvas.height = 1920;
+  const ctx = canvas.getContext('2d');
+
+  const gradient = ctx.createLinearGradient(0,0,1080,1920);
+  gradient.addColorStop(0,colors[0]);
+  gradient.addColorStop(1,colors[1]);
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0,0,1080,1920);
+
+  ctx.globalAlpha = .55;
+  ctx.fillStyle = colors[1];
+  ctx.beginPath();
+  ctx.arc(1000,100,340,0,Math.PI*2);
+  ctx.fill();
+
+  ctx.globalAlpha = .5;
+  ctx.fillStyle = colors[0];
+  ctx.beginPath();
+  ctx.arc(0,1770,420,0,Math.PI*2);
+  ctx.fill();
+  ctx.globalAlpha = 1;
+
+  if (frame !== 'none') {
+    ctx.strokeStyle = colors[2];
+    ctx.lineWidth = frame === 'double' ? 7 : 5;
+    ctx.strokeRect(24,24,1032,1872);
+    if (frame === 'double') {
+      ctx.lineWidth = 2;
+      ctx.strokeRect(42,42,996,1836);
+    }
+  }
+
+  const left = align === 'left';
+  const x = left ? 85 : 540;
+  const maxWidth = left ? 900 : 930;
+  ctx.fillStyle = colors[2];
+  ctx.textAlign = align;
+  ctx.textBaseline = 'middle';
+
+  function wrappedText(text,font,size,y,lineHeight) {
+    ctx.font = `${size}px ${font}`;
+    const words = text.split(/\s+/);
+    const lines = [];
+    let line = '';
+
+    for (const word of words) {
+      const test = line ? line + ' ' + word : word;
+      if (ctx.measureText(test).width > maxWidth && line) {
+        lines.push(line);
+        line = word;
+      } else {
+        line = test;
+      }
+    }
+    if (line) lines.push(line);
+
+    lines.slice(0,6).forEach((lineText,index) => {
+      ctx.fillText(lineText,x,y + index * lineHeight,maxWidth);
+    });
+
+    return y + Math.min(lines.length,6) * lineHeight;
+  }
+
+  ctx.font = 'bold 28px Arial';
+  ctx.textAlign = align;
+  ctx.fillText($('kicker').value.toUpperCase(),x,400,maxWidth);
+
+  let y = 500;
+
+  if (photoUrl) {
+    try {
+      const img = new Image();
+      img.src = photoUrl;
+      await img.decode();
+
+      const boxX = 150, boxY = 500, boxW = 780, boxH = 500;
+      let width, height, dx, dy;
+
+      if (photoFit === 'cover') {
+        const ratio = Math.max(boxW / img.width,boxH / img.height);
+        width = img.width * ratio;
+        height = img.height * ratio;
+        dx = boxX + (boxW - width) / 2;
+        dy = boxY + (boxH - height) / 2;
+      } else {
+        const ratio = Math.min(boxW / img.width,boxH / img.height);
+        width = img.width * ratio;
+        height = img.height * ratio;
+        dx = (1080 - width) / 2;
+        dy = boxY + (boxH - height) / 2;
+      }
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.roundRect(
+        photoFit === 'cover' ? boxX : dx,
+        photoFit === 'cover' ? boxY : dy,
+        photoFit === 'cover' ? boxW : width,
+        photoFit === 'cover' ? boxH : height,
+        28
+      );
+      ctx.clip();
+      ctx.drawImage(img,dx,dy,width,height);
+      ctx.restore();
+
+      y = 1080;
+    } catch (error) {
+      console.error('Foto konnte nicht exportiert werden:',error);
+    }
+  }
+
+  if (sticker) {
+    ctx.textAlign = 'center';
+    ctx.font = '100px Arial';
+    ctx.fillText(sticker,left ? 160 : 540,y);
+    y += 95;
+  }
+
+  ctx.textAlign = align;
+  const titleSize = Number($('fontSize').value) * 2.1;
+  y = wrappedText($('titleText').value,'Georgia',titleSize,y + 30,titleSize * 1.12);
+
+  ctx.font = '34px Arial';
+  y += 45;
+  wrappedText($('subText').value,'Arial',34,y,44);
+
+  ctx.globalAlpha = .65;
+  ctx.font = '20px Arial';
+  ctx.textAlign = 'left';
+  ctx.fillText('@yourhandle',75,1840);
+  ctx.textAlign = 'right';
+  ctx.fillText('made with storymaker ✿',1005,1840);
+  ctx.globalAlpha = 1;
+
+  const link = document.createElement('a');
+  link.download = 'storymaker-instagram-story.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
 }
-function game(k,t,s){
- document.getElementById('kicker').value=k;
- document.getElementById('title').value=t;
- document.getElementById('sub').value=s;
- render();
-}
-function loadPhoto(e){
- const file=e.target.files[0];if(!file)return;
- if(photoURL)URL.revokeObjectURL(photoURL);
- photoURL=URL.createObjectURL(file);
- const img=document.getElementById('photoOut');
- img.src=photoURL;img.style.display='block';
-}
-function resetStory(){
- document.getElementById('kicker').value='A LITTLE REMINDER';
- document.getElementById('title').value='you are allowed to grow at your own pace.';
- document.getElementById('sub').value='save this for a day you need it ♡';
- document.getElementById('sticker').value='♡';
- document.getElementById('size').value=37;
- document.getElementById('align').value='center';
- if(photoURL)URL.revokeObjectURL(photoURL);
- photoURL='';
- document.getElementById('photoOut').style.display='none';
- document.getElementById('photo').value='';
- setColors('#f3d5df','#faeee1','#493638');
-}
-function downloadStory(){
- const canvas=document.createElement('canvas');
- canvas.width=1080;canvas.height=1920;
- const ctx=canvas.getContext('2d');
- const g=ctx.createLinearGradient(0,0,1080,1920);
- g.addColorStop(0,bg1);g.addColorStop(1,bg2);
- ctx.fillStyle=g;ctx.fillRect(0,0,1080,1920);
- ctx.fillStyle=fg;ctx.textBaseline='middle';
- const alignment=document.getElementById('align').value;
- ctx.textAlign=alignment;
- const x=alignment==='left'?85:alignment==='right'?995:540;
- const maxWidth=910;
- ctx.font='bold 27px Arial';
- ctx.fillText(document.getElementById('kicker').value.toUpperCase(),x,500,maxWidth);
- let y=680;
- const stickerText=document.getElementById('sticker').value;
- if(stickerText!=='Keiner'){
-   ctx.textAlign='center';ctx.font='85px Arial';ctx.fillText(stickerText,540,y);y+=110;
- }
- if(photoURL){
-   const img=document.getElementById('photoOut');
-   try{ctx.drawImage(img,180,580,720,450);y=1100}catch(e){}
- }
- const title=document.getElementById('title').value;
- const fontSize=Number(document.getElementById('size').value)*2;
- ctx.textAlign=alignment;ctx.font=fontSize+'px Georgia';
- const words=title.split(/\s+/);let line='',lines=[];
- words.forEach(word=>{
-   const test=line?line+' '+word:word;
-   if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}
-   else line=test;
- });
- if(line)lines.push(line);
- lines.slice(0,5).forEach((l,i)=>ctx.fillText(l,x,y+i*fontSize*1.2,maxWidth));
- y+=Math.min(lines.length,5)*fontSize*1.2+50;
- ctx.font='32px Arial';
- const sub=document.getElementById('sub').value;
- ctx.fillText(sub,x,y,maxWidth);
- ctx.font='20px Arial';ctx.textAlign='left';ctx.fillText('@yourhandle',75,1840);
- ctx.textAlign='right';ctx.fillText('made with StoryMaker ♡',1005,1840);
- const a=document.createElement('a');
- a.download='storymaker.png';a.href=canvas.toDataURL('image/png');a.click();
-}
-async function copyText(text){
- try{await navigator.clipboard.writeText(text);alert('Kopiert! ♡')}
- catch(e){prompt('Hier kopieren:',text)}
-}
-function copyCaption(){copyText(document.getElementById('caption').value)}
-function copyAll(){copyText(document.getElementById('caption').value+'\n\n'+document.getElementById('hashtags').value)}
+
+['export','export2','topExport'].forEach(id => $(id).onclick = exportPng);
+
+$('reset').onclick = () => {
+  if (photoUrl) URL.revokeObjectURL(photoUrl);
+  photoUrl = '';
+  $('photoInput').value = '';
+  colors = ['#f3d9df','#faeee4','#5b3c43'];
+  sticker = '♡';
+  align = 'center';
+  $('kicker').value = presets.quote[0];
+  $('titleText').value = presets.quote[1];
+  $('subText').value = presets.quote[2];
+  $('fontSize').value = 44;
+  document.querySelector('[data-template="quote"]').click();
+  render();
+};
+
 render();
 </script>
 </body>
