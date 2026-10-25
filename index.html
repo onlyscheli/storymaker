@@ -1,479 +1,245 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ANACONDA</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <style>
-        * {
-            box-sizing: border-box;
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: manipulation;
-        }
-        body {
-            background-color: #050b14;
-            color: #00ff88;
-            font-family: 'Press Start 2P', monospace;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-            padding: 5px 0;
-        }
-        h1 {
-            font-size: 1.1rem;
-            color: #00ff88;
-            text-shadow: 2px 2px #ff0055;
-            margin: 0 0 6px 0;
-            letter-spacing: 2px;
-        }
-        .ui-panel {
-            display: flex;
-            justify-content: space-between;
-            width: 320px;
-            font-size: 0.55rem;
-            margin-bottom: 6px;
-        }
-        .ui-box {
-            background: #0d1b2a;
-            border: 2px solid #00ff88;
-            padding: 5px 6px;
-            box-shadow: inset 0 0 5px #00ff88;
-        }
-        #game-container {
-            position: relative;
-            border: 3px solid #ff0055;
-            box-shadow: 0 0 15px #ff0055, inset 0 0 15px #00ff88;
-            background-color: #080e18;
-            width: 320px;
-            height: 320px;
-        }
-        canvas {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
-        #message-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            width: 90%;
-            pointer-events: none;
-            z-index: 5;
-        }
-        .retro-msg {
-            font-size: 0.75rem;
-            color: #ffee00;
-            text-shadow: 2px 2px #ff0000;
-            animation: popUp 1s ease-out forwards;
-            opacity: 0;
-        }
-        @keyframes popUp {
-            0% { transform: scale(0.4); opacity: 0; }
-            30% { transform: scale(1.1); opacity: 1; }
-            70% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(1); opacity: 0; }
-        }
-        #start-screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(5, 11, 20, 0.95);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-            z-index: 10;
-        }
-        .btn {
-            background-color: #ff0055;
-            color: #ffffff;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 0.85rem;
-            padding: 14px 28px;
-            border: 3px solid #00ff88;
-            cursor: pointer;
-            box-shadow: 4px 4px #00ff88;
-        }
-        .btn:active {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px #00ff88;
-        }
-        /* Steuerkreuz */
-        .controls {
-            display: grid;
-            grid-template-columns: 65px 65px 65px;
-            grid-template-rows: 46px 46px;
-            gap: 6px;
-            margin-top: 8px;
-            justify-content: center;
-        }
-        .ctrl-btn {
-            background-color: #0d1b2a;
-            border: 2px solid #00ff88;
-            color: #00ff88;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            box-shadow: 0 3px 0 #005533;
-        }
-        .ctrl-btn:active {
-            background-color: #00ff88;
-            color: #050b14;
-            transform: translateY(2px);
-            box-shadow: 0 1px 0 #005533;
-        }
-        .btn-up { grid-column: 2; grid-row: 1; }
-        .btn-left { grid-column: 1; grid-row: 2; }
-        .btn-down { grid-column: 2; grid-row: 2; }
-        .btn-right { grid-column: 3; grid-row: 2; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StoryMaker ♡</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff8f5;color:#493638;font-family:Arial,sans-serif}
+header{text-align:center;padding:25px 12px}
+h1{color:#c87891;font-size:34px;margin:0}
+header p{color:#967d7d}
+main{max-width:1050px;margin:auto;padding:15px}
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.panel{background:white;border:1px solid #f0dcd9;border-radius:20px;padding:20px;box-shadow:0 8px 25px #6a3e3510}
+h2{font-size:18px}
+label{display:block;font-size:13px;font-weight:bold;margin:14px 0 6px}
+input,textarea,select{width:100%;padding:11px;border:1px solid #ead6d3;border-radius:10px;background:#fffaf8;color:#493638}
+textarea{resize:vertical;min-height:65px}
+button{border:0;border-radius:11px;padding:11px 14px;background:#d88ca2;color:white;font-weight:bold;cursor:pointer;margin:5px 3px 5px 0}
+button.secondary{background:#f8e5e9;color:#8d5266}
+button:hover{opacity:.85}
+#story{width:100%;max-width:340px;aspect-ratio:9/16;margin:auto;border-radius:20px;overflow:hidden;background:linear-gradient(145deg,#f3d5df,#faeee1);display:flex;align-items:center;justify-content:center;text-align:center;position:relative}
+#content{padding:9%;width:100%;white-space:pre-wrap;overflow-wrap:anywhere}
+#kickerOut{font-size:11px;letter-spacing:3px;margin-bottom:22px}
+#titleOut{font-family:Georgia,serif;font-size:37px;line-height:1.1}
+#subOut{font-size:14px;margin-top:20px;line-height:1.5}
+#stickerOut{font-size:35px;margin:15px}
+#photoOut{max-width:100%;max-height:220px;object-fit:cover;border-radius:12px;display:none;margin:12px auto}
+.footer{position:absolute;bottom:12px;left:0;right:0;font-size:10px;opacity:.65}
+.templates{display:flex;flex-wrap:wrap;gap:5px}
+.swatches{display:flex;gap:10px;margin-top:8px}
+.swatch{width:32px;height:32px;border-radius:50%;border:2px solid white;box-shadow:0 0 0 1px #ddd;cursor:pointer}
+.note{font-size:12px;color:#967d7d;line-height:1.5}
+@media(max-width:700px){.layout{grid-template-columns:1fr}#story{max-width:300px}}
+</style>
 </head>
 <body>
+<header>
+  <h1>StoryMaker ♡</h1>
+  <p>Make your story a whole vibe.</p>
+</header>
 
-    <h1>ANACONDA</h1>
-    
-    <div class="ui-panel">
-        <div class="ui-box">PTS: <span id="score">0</span></div>
-        <div class="ui-box">LVL: <span id="level">1</span></div>
-        <div class="ui-box">HI: <span id="highscore">0</span></div>
-    </div>
+<main>
+<div class="layout">
+<section class="panel">
+<h2>🎀 Gestalte deine Story</h2>
 
-    <div id="game-container">
-        <canvas id="gameCanvas" width="400" height="400"></canvas>
-        <div id="message-overlay"></div>
-        
-        <div id="start-screen">
-            <button class="btn" id="start-btn">▶ PLAY</button>
-        </div>
-    </div>
+<label>Vorlage</label>
+<div class="templates">
+<button class="secondary" onclick="preset('quote')">Soft Quote</button>
+<button class="secondary" onclick="preset('poll')">This or That</button>
+<button class="secondary" onclick="preset('birthday')">Birthday</button>
+<button class="secondary" onclick="preset('mood')">Current Mood</button>
+<button class="secondary" onclick="preset('game')">Story Game</button>
+</div>
 
-    <!-- Touch-Steuerkreuz -->
-    <div class="controls">
-        <div class="ctrl-btn btn-up" id="btn-up">▲</div>
-        <div class="ctrl-btn btn-left" id="btn-left">◀</div>
-        <div class="ctrl-btn btn-down" id="btn-down">▼</div>
-        <div class="ctrl-btn btn-right" id="btn-right">▶</div>
-    </div>
+<label>Überschrift</label>
+<input id="kicker" value="A LITTLE REMINDER" oninput="render()">
+
+<label>Dein Haupttext</label>
+<textarea id="title" oninput="render()">you are allowed to grow at your own pace.</textarea>
+
+<label>Zusatztext</label>
+<textarea id="sub" oninput="render()">save this for a day you need it ♡</textarea>
+
+<label>Sticker</label>
+<select id="sticker" onchange="render()">
+<option>♡</option>
+<option>✦</option>
+<option>✿</option>
+<option>☁</option>
+<option>🎀</option>
+<option>✨</option>
+<option>🤍</option>
+<option>☀️</option>
+<option>Keiner</option>
+</select>
+
+<label>Schriftgröße</label>
+<input id="size" type="range" min="22" max="55" value="37" oninput="render()">
+
+<label>Textausrichtung</label>
+<select id="align" onchange="render()">
+<option value="center">Zentriert</option>
+<option value="left">Links</option>
+<option value="right">Rechts</option>
+</select>
+
+<label>Hintergrundfarbe</label>
+<div class="swatches">
+<div class="swatch" style="background:linear-gradient(135deg,#f3d5df 50%,#faeee1 50%)" onclick="setColors('#f3d5df','#faeee1','#493638')"></div>
+<div class="swatch" style="background:linear-gradient(135deg,#e7d3bd 50%,#faf1e5 50%)" onclick="setColors('#e7d3bd','#faf1e5','#574438')"></div>
+<div class="swatch" style="background:linear-gradient(135deg,#d9c9eb 50%,#f5eafa 50%)" onclick="setColors('#d9c9eb','#f5eafa','#493b5b')"></div>
+<div class="swatch" style="background:linear-gradient(135deg,#cbd8c6 50%,#f1eee2 50%)" onclick="setColors('#cbd8c6','#f1eee2','#3e5141')"></div>
+<div class="swatch" style="background:linear-gradient(135deg,#302a35 50%,#594352 50%)" onclick="setColors('#302a35','#594352','#fff1e8')"></div>
+</div>
+
+<label>Eigenes Foto</label>
+<input type="file" id="photo" accept="image/*" onchange="loadPhoto(event)">
+<p class="note">Dein Foto wird lokal im Browser verarbeitet.</p>
+
+<button onclick="downloadStory()">↓ Story herunterladen</button>
+<button class="secondary" onclick="copyCaption()">Caption kopieren</button>
+<button class="secondary" onclick="resetStory()">Zurücksetzen</button>
+</section>
+
+<section class="panel">
+<h2>✨ Live-Vorschau</h2>
+<div id="story">
+<div id="content">
+<div id="kickerOut">A LITTLE REMINDER</div>
+<img id="photoOut" alt="Dein Foto">
+<div id="stickerOut">♡</div>
+<div id="titleOut">you are allowed to grow at your own pace.</div>
+<div id="subOut">save this for a day you need it ♡</div>
+</div>
+<div class="footer">@yourhandle · made with StoryMaker ♡</div>
+</div>
+
+<p class="note">Dein Design wird im Instagram-Story-Format 9:16 exportiert.</p>
+
+<h2>♡ Caption & Hashtags</h2>
+<textarea id="caption">a little reminder for your feed ♡ save it for later</textarea>
+<input id="hashtags" value="#aesthetic #instagramstory #storymaker">
+<button onclick="copyAll()">Caption + Hashtags kopieren</button>
+
+<h2>🎲 Story-Ideen</h2>
+<button class="secondary" onclick="game('THIS OR THAT?','Coffee ☕  /  Matcha 🍵','Welche Seite bist du?')">This or That</button>
+<button class="secondary" onclick="game('WHO KNOWS ME BEST?','Bestie 💗  /  Familie 🫶','Markiere deine Person!')">Wer kennt mich?</button>
+<button class="secondary" onclick="game('CURRENT MOOD','Soft girl 🎀','Was ist dein aktueller Vibe?')">Current Mood</button>
+<p class="note">Tipp: Füge echte Instagram-Umfrage-Sticker nach dem Hochladen in Instagram hinzu.</p>
+</section>
+</div>
+</main>
 
 <script>
-    const canvas = document.getElementById("gameCanvas");
-    const ctx = canvas.getContext("2d");
-    const scoreEl = document.getElementById("score");
-    const levelEl = document.getElementById("level");
-    const highscoreEl = document.getElementById("highscore");
-    const startScreen = document.getElementById("start-screen");
-    const startBtn = document.getElementById("start-btn");
-    const messageOverlay = document.getElementById("message-overlay");
+let bg1='#f3d5df',bg2='#faeee1',fg='#493638',photoURL='';
 
-    const GRID_SIZE = 20;
-    const TILE_COUNT = canvas.width / GRID_SIZE;
-
-    let snake = [];
-    let food = {};
-    let obstacles = [];
-    let dx = 1;
-    let dy = 0;
-    let score = 0;
-    let level = 1;
-    let highscore = localStorage.getItem("anaconda_high") || 0;
-    let gameInterval = null;
-    let gameRunning = false;
-    let speed = 160;
-
-    highscoreEl.textContent = highscore;
-
-    const compliments = ["⚡ FAST!", "🔥 FIRE!", "👑 KING!", "🚀 EPIC!", "💎 BONUS!", "⭐ GO!"];
-
-    let audioCtx = null;
-    function initAudio() {
-        if (!audioCtx) {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        }
-    }
-
-    function playSound(type) {
-        if (!audioCtx) return;
-        try {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            const now = audioCtx.currentTime;
-
-            if (type === 'eat') {
-                osc.type = 'square';
-                osc.frequency.setValueAtTime(350, now);
-                osc.frequency.exponentialRampToValueAtTime(700, now + 0.08);
-                gain.gain.setValueAtTime(0.1, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
-                osc.start(now);
-                osc.stop(now + 0.08);
-            } else if (type === 'level') {
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(400, now);
-                osc.frequency.setValueAtTime(650, now + 0.1);
-                gain.gain.setValueAtTime(0.12, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
-                osc.start(now);
-                osc.stop(now + 0.25);
-            } else if (type === 'gameover') {
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(250, now);
-                osc.frequency.exponentialRampToValueAtTime(60, now + 0.35);
-                gain.gain.setValueAtTime(0.15, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
-                osc.start(now);
-                osc.stop(now + 0.35);
-            }
-        } catch(e) {}
-    }
-
-    function showPopup(text) {
-        const msg = document.createElement("div");
-        msg.className = "retro-msg";
-        msg.textContent = text;
-        messageOverlay.appendChild(msg);
-        setTimeout(() => msg.remove(), 1000);
-    }
-
-    function startGame(e) {
-        if (e) e.preventDefault();
-        initAudio();
-        snake = [{ x: 10, y: 10 }, { x: 9, y: 10 }, { x: 8, y: 10 }];
-        dx = 1;
-        dy = 0;
-        score = 0;
-        level = 1;
-        speed = 160;
-        obstacles = [];
-        scoreEl.textContent = score;
-        levelEl.textContent = level;
-        startScreen.style.display = "none";
-        gameRunning = true;
-        spawnFood();
-        if (gameInterval) clearInterval(gameInterval);
-        gameInterval = setInterval(gameLoop, speed);
-    }
-
-    function spawnFood() {
-        let valid = false;
-        while (!valid) {
-            food = {
-                x: Math.floor(Math.random() * TILE_COUNT),
-                y: Math.floor(Math.random() * TILE_COUNT)
-            };
-            valid = true;
-            for (let part of snake) {
-                if (part.x === food.x && part.y === food.y) valid = false;
-            }
-            for (let obs of obstacles) {
-                if (obs.x === food.x && obs.y === food.y) valid = false;
-            }
-        }
-    }
-
-    function spawnObstacles() {
-        obstacles = [];
-        if (level === 1) return;
-
-        let count = (level - 1) * 2;
-        for (let i = 0; i < count; i++) {
-            let valid = false;
-            let obs;
-            while (!valid) {
-                obs = {
-                    x: Math.floor(Math.random() * TILE_COUNT),
-                    y: Math.floor(Math.random() * TILE_COUNT)
-                };
-                valid = true;
-                if (Math.abs(obs.x - snake[0].x) < 3 && Math.abs(obs.y - snake[0].y) < 3) valid = false;
-                if (obs.x === food.x && obs.y === food.y) valid = false;
-                for (let part of snake) {
-                    if (part.x === obs.x && part.y === obs.y) valid = false;
-                }
-            }
-            obstacles.push(obs);
-        }
-    }
-
-    function gameLoop() {
-        if (!gameRunning) return;
-        update();
-        draw();
-    }
-
-    function update() {
-        const head = { x: snake[0].x + dx, y: snake[0].y + dy };
-
-        if (head.x < 0 || head.x >= TILE_COUNT || head.y < 0 || head.y >= TILE_COUNT) {
-            gameOver();
-            return;
-        }
-
-        for (let part of snake) {
-            if (head.x === part.x && head.y === part.y) {
-                gameOver();
-                return;
-            }
-        }
-
-        for (let obs of obstacles) {
-            if (head.x === obs.x && head.y === obs.y) {
-                gameOver();
-                return;
-            }
-        }
-
-        snake.unshift(head);
-
-        if (head.x === food.x && head.y === food.y) {
-            score += 10 * level;
-            scoreEl.textContent = score;
-            playSound('eat');
-
-            if (score >= level * 50) {
-                level++;
-                levelEl.textContent = level;
-                speed = Math.max(50, speed - 15);
-                clearInterval(gameInterval);
-                gameInterval = setInterval(gameLoop, speed);
-                spawnObstacles();
-                playSound('level');
-                showPopup(`LVL ${level} 🚀`);
-            } else if (score % 30 === 0) {
-                showPopup(compliments[Math.floor(Math.random() * compliments.length)]);
-            }
-
-            spawnFood();
-        } else {
-            snake.pop();
-        }
-    }
-
-    function draw() {
-        ctx.fillStyle = "#050b14";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Hindernisse
-        ctx.fillStyle = "#ff0055";
-        ctx.shadowBlur = 6;
-        ctx.shadowColor = "#ff0055";
-        for (let obs of obstacles) {
-            ctx.fillRect(obs.x * GRID_SIZE + 1, obs.y * GRID_SIZE + 1, GRID_SIZE - 2, GRID_SIZE - 2);
-        }
-
-        // Futter
-        ctx.fillStyle = "#ffee00";
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = "#ffee00";
-        ctx.fillRect(food.x * GRID_SIZE + 1, food.y * GRID_SIZE + 1, GRID_SIZE - 2, GRID_SIZE - 2);
-
-        // Anaconda
-        for (let i = 0; i < snake.length; i++) {
-            let part = snake[i];
-            ctx.fillStyle = i === 0 ? "#00ff88" : "#00aa55";
-            ctx.shadowBlur = i === 0 ? 10 : 2;
-            ctx.shadowColor = "#00ff88";
-            ctx.fillRect(part.x * GRID_SIZE + 1, part.y * GRID_SIZE + 1, GRID_SIZE - 2, GRID_SIZE - 2);
-        }
-        ctx.shadowBlur = 0;
-    }
-
-    function gameOver() {
-        gameRunning = false;
-        clearInterval(gameInterval);
-        playSound('gameover');
-
-        if (score > highscore) {
-            highscore = score;
-            localStorage.setItem("anaconda_high", highscore);
-            highscoreEl.textContent = highscore;
-            showPopup("NEW HIGH! 🏆");
-        }
-
-        startScreen.style.display = "flex";
-        startBtn.textContent = "AGAIN";
-    }
-
-    // Touch-Steuerung über Buttons
-    document.getElementById("btn-up").addEventListener("click", () => { if (dy === 0) { dx = 0; dy = -1; } });
-    document.getElementById("btn-down").addEventListener("click", () => { if (dy === 0) { dx = 0; dy = 1; } });
-    document.getElementById("btn-left").addEventListener("click", () => { if (dx === 0) { dx = -1; dy = 0; } });
-    document.getElementById("btn-right").addEventListener("click", () => { if (dx === 0) { dx = 1; dy = 0; } });
-
-    // Zuverlässiger Start-Button (unterstützt Klick und Touch direkt)
-    startBtn.addEventListener("click", startGame);
-    startBtn.addEventListener("touchstart", startGame);
-
-    // Tastatur-Steuerung (Pfeiltasten & WASD)
-    window.addEventListener("keydown", e => {
-        if (!gameRunning && e.code === "Space") {
-            startGame();
-            return;
-        }
-        switch (e.code) {
-            case "ArrowUp":
-            case "KeyW":
-                if (dy === 0) { dx = 0; dy = -1; }
-                break;
-            case "ArrowDown":
-            case "KeyS":
-                if (dy === 0) { dx = 0; dy = 1; }
-                break;
-            case "ArrowLeft":
-            case "KeyA":
-                if (dx === 0) { dx = -1; dy = 0; }
-                break;
-            case "ArrowRight":
-            case "KeyD":
-                if (dx === 0) { dx = 1; dy = 0; }
-                break;
-        }
-    });
-
-    // Swipe-Steuerung direkt auf dem Spielfeld
-    let touchStartX = 0;
-    let touchStartY = 0;
-
-    canvas.addEventListener("touchstart", e => {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-        e.preventDefault();
-    }, { passive: false });
-
-    canvas.addEventListener("touchmove", e => { e.preventDefault(); }, { passive: false });
-
-    canvas.addEventListener("touchend", e => {
-        if (!gameRunning) return;
-        let diffX = e.changedTouches[0].clientX - touchStartX;
-        let diffY = e.changedTouches[0].clientY - touchStartY;
-
-        if (Math.abs(diffX) > Math.abs(diffY)) {
-            if (diffX > 25 && dx === 0) { dx = 1; dy = 0; }
-            else if (diffX < -25 && dx === 0) { dx = -1; dy = 0; }
-        } else {
-            if (diffY > 25 && dy === 0) { dx = 0; dy = 1; }
-            else if (diffY < -25 && dy === 0) { dx = 0; dy = -1; }
-        }
-        e.preventDefault();
-    }, { passive: false });
-
-    draw();
+function render(){
+ document.getElementById('kickerOut').textContent=document.getElementById('kicker').value;
+ document.getElementById('titleOut').textContent=document.getElementById('title').value;
+ document.getElementById('subOut').textContent=document.getElementById('sub').value;
+ document.getElementById('stickerOut').textContent=document.getElementById('sticker').value==='Keiner'?'':document.getElementById('sticker').value;
+ document.getElementById('titleOut').style.fontSize=document.getElementById('size').value+'px';
+ document.getElementById('content').style.textAlign=document.getElementById('align').value;
+ document.getElementById('story').style.background=`linear-gradient(145deg,${bg1},${bg2})`;
+ document.getElementById('story').style.color=fg;
+}
+function setColors(a,b,c){bg1=a;bg2=b;fg=c;render()}
+function preset(type){
+ const presets={
+ quote:['A LITTLE REMINDER','you are allowed to grow at your own pace.','save this for a day you need it ♡','♡'],
+ poll:['THIS OR THAT?','coffee or matcha?','vote in my next story ☕🍵','✦'],
+ birthday:['IT’S MY DAY','birthday girl energy','another trip around the sun ♡','🎀'],
+ mood:['CURRENT MOOD','in my soft era','protecting my peace ☁','☁'],
+ game:['LET’S PLAY','who knows me best?','answer in my next story ♡','✿']
+ };
+ const p=presets[type];
+ document.getElementById('kicker').value=p[0];
+ document.getElementById('title').value=p[1];
+ document.getElementById('sub').value=p[2];
+ document.getElementById('sticker').value=p[3];
+ render();
+}
+function game(k,t,s){
+ document.getElementById('kicker').value=k;
+ document.getElementById('title').value=t;
+ document.getElementById('sub').value=s;
+ render();
+}
+function loadPhoto(e){
+ const file=e.target.files[0];if(!file)return;
+ if(photoURL)URL.revokeObjectURL(photoURL);
+ photoURL=URL.createObjectURL(file);
+ const img=document.getElementById('photoOut');
+ img.src=photoURL;img.style.display='block';
+}
+function resetStory(){
+ document.getElementById('kicker').value='A LITTLE REMINDER';
+ document.getElementById('title').value='you are allowed to grow at your own pace.';
+ document.getElementById('sub').value='save this for a day you need it ♡';
+ document.getElementById('sticker').value='♡';
+ document.getElementById('size').value=37;
+ document.getElementById('align').value='center';
+ if(photoURL)URL.revokeObjectURL(photoURL);
+ photoURL='';
+ document.getElementById('photoOut').style.display='none';
+ document.getElementById('photo').value='';
+ setColors('#f3d5df','#faeee1','#493638');
+}
+function downloadStory(){
+ const canvas=document.createElement('canvas');
+ canvas.width=1080;canvas.height=1920;
+ const ctx=canvas.getContext('2d');
+ const g=ctx.createLinearGradient(0,0,1080,1920);
+ g.addColorStop(0,bg1);g.addColorStop(1,bg2);
+ ctx.fillStyle=g;ctx.fillRect(0,0,1080,1920);
+ ctx.fillStyle=fg;ctx.textBaseline='middle';
+ const alignment=document.getElementById('align').value;
+ ctx.textAlign=alignment;
+ const x=alignment==='left'?85:alignment==='right'?995:540;
+ const maxWidth=910;
+ ctx.font='bold 27px Arial';
+ ctx.fillText(document.getElementById('kicker').value.toUpperCase(),x,500,maxWidth);
+ let y=680;
+ const stickerText=document.getElementById('sticker').value;
+ if(stickerText!=='Keiner'){
+   ctx.textAlign='center';ctx.font='85px Arial';ctx.fillText(stickerText,540,y);y+=110;
+ }
+ if(photoURL){
+   const img=document.getElementById('photoOut');
+   try{ctx.drawImage(img,180,580,720,450);y=1100}catch(e){}
+ }
+ const title=document.getElementById('title').value;
+ const fontSize=Number(document.getElementById('size').value)*2;
+ ctx.textAlign=alignment;ctx.font=fontSize+'px Georgia';
+ const words=title.split(/\s+/);let line='',lines=[];
+ words.forEach(word=>{
+   const test=line?line+' '+word:word;
+   if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}
+   else line=test;
+ });
+ if(line)lines.push(line);
+ lines.slice(0,5).forEach((l,i)=>ctx.fillText(l,x,y+i*fontSize*1.2,maxWidth));
+ y+=Math.min(lines.length,5)*fontSize*1.2+50;
+ ctx.font='32px Arial';
+ const sub=document.getElementById('sub').value;
+ ctx.fillText(sub,x,y,maxWidth);
+ ctx.font='20px Arial';ctx.textAlign='left';ctx.fillText('@yourhandle',75,1840);
+ ctx.textAlign='right';ctx.fillText('made with StoryMaker ♡',1005,1840);
+ const a=document.createElement('a');
+ a.download='storymaker.png';a.href=canvas.toDataURL('image/png');a.click();
+}
+async function copyText(text){
+ try{await navigator.clipboard.writeText(text);alert('Kopiert! ♡')}
+ catch(e){prompt('Hier kopieren:',text)}
+}
+function copyCaption(){copyText(document.getElementById('caption').value)}
+function copyAll(){copyText(document.getElementById('caption').value+'\n\n'+document.getElementById('hashtags').value)}
+render();
 </script>
-
 </body>
 </html>
