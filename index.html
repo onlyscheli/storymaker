@@ -1,519 +1,733 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f7e9e2">
-<title>StoryMaker — Instagram Story Studio</title>
+<meta name="theme-color" content="#fff8f5">
+<title>StoryMaker – onlyscheli.com</title>
+<meta name="description" content="Kostenlos ästhetische Instagram Stories gestalten. Tägliche Vorlagen, Vibes, Foto-Designs und interaktive Story-Ideen.">
+
+<!-- Google AdSense: Anzeigenclient -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2187109190409697"
+     crossorigin="anonymous"></script>
+
 <style>
 :root {
-  --bg:#fffaf7; --ink:#342b2b; --muted:#887b78;
-  --pink:#e9a8b6; --pink2:#f7dce1; --beige:#ead8c9;
-  --line:#efdfd8; --white:#fff;
+  --bg:#fff8f5;
+  --paper:#ffffff;
+  --ink:#342b2d;
+  --muted:#8d7b7b;
+  --pink:#d98ca0;
+  --pink-light:#f8e5e9;
+  --line:#efdfda;
 }
 * { box-sizing:border-box }
 body {
-  margin:0; background:var(--bg); color:var(--ink);
-  font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;
+  margin:0;
+  color:var(--ink);
+  background:var(--bg);
+  font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;
 }
-button,input,textarea { font:inherit }
-button { cursor:pointer; border:0 }
+button,input,textarea,select { font:inherit }
+button { cursor:pointer }
 header {
-  padding:18px clamp(16px,4vw,42px); display:flex;
-  align-items:center; justify-content:space-between;
-  border-bottom:1px solid var(--line); background:#fffaf7;
-  position:sticky; top:0; z-index:5;
+  position:sticky;
+  top:0;
+  z-index:10;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  padding:13px clamp(12px,3vw,30px);
+  background:#fffaf8f5;
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(12px);
 }
-.brand { font-weight:850; font-size:21px }
-.brand span { color:#c66f86 }
-.tag,.small { font-size:12px; color:var(--muted) }
-main { max-width:1180px; margin:auto; padding:26px 20px 48px }
-.intro { margin:6px 0 24px }
-.eyebrow { letter-spacing:2px; color:#bb7585; font-weight:800; font-size:10px }
-h1 { font-size:clamp(27px,4vw,42px); line-height:1.05 }
-.intro p { color:var(--muted); max-width:660px }
-.workspace {
-  display:grid; grid-template-columns:minmax(260px,340px)
-  minmax(280px,1fr) minmax(230px,285px);
-  gap:18px; align-items:start;
+.logo { font-size:21px; font-weight:850; letter-spacing:-.8px }
+.logo span { color:var(--pink) }
+.header-actions { display:flex; gap:7px; flex-wrap:wrap }
+button {
+  border:0;
+  border-radius:11px;
+  padding:10px 13px;
+  font-weight:700;
+  font-size:12px;
+}
+.primary { background:var(--pink); color:white }
+.secondary { background:var(--pink-light); color:#79495a }
+.neutral { background:#f5eeeb; color:#65534e }
+main { max-width:1200px; padding:24px 16px 40px; margin:auto }
+.intro { margin-bottom:20px }
+.eyebrow { color:#bb7589; font-weight:800; font-size:10px; letter-spacing:2px }
+h1 { font-size:clamp(27px,4vw,39px); line-height:1.1; margin:7px 0 }
+.intro p { color:var(--muted); margin:8px 0 }
+.layout {
+  display:grid;
+  grid-template-columns:minmax(260px,340px) minmax(270px,1fr);
+  gap:18px;
+  align-items:start;
 }
 .panel {
-  background:white; border:1px solid var(--line);
-  border-radius:22px; padding:17px;
-  box-shadow:0 12px 35px #5c33200d;
+  padding:16px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:19px;
+  box-shadow:0 8px 28px #58332608;
+  min-width:0;
 }
-.panel h2 { font-size:14px; margin:0 0 14px }
-.tabs { display:flex; gap:5px; background:#f8efeb; border-radius:12px; padding:4px }
-.tab { flex:1; padding:9px 4px; background:transparent; border-radius:9px; font-size:12px }
-.tab.active { background:white; font-weight:750 }
-.section { display:none; margin-top:14px }
-.section.active { display:block }
-.field { margin:13px 0 }
-.field label { display:block; font-size:12px; font-weight:750; margin-bottom:6px }
-.field input,.field textarea,.field select {
-  width:100%; border:1px solid var(--line); background:#fffdfb;
-  border-radius:11px; padding:10px; color:var(--ink);
+.panel h2 { font-size:14px; margin:0 0 12px }
+.panel h3 { font-size:12px; margin:0 0 8px }
+.group { padding-bottom:15px; margin-bottom:15px; border-bottom:1px solid #f3e9e5 }
+.group:last-child { border-bottom:0; margin-bottom:0; padding-bottom:0 }
+label { display:block; font-size:12px; font-weight:750; margin-bottom:6px }
+.field { margin:10px 0 }
+input[type="text"],textarea,select {
+  display:block;
+  width:100%;
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#fffdfb;
+  color:var(--ink);
 }
-.field textarea { min-height:75px; resize:vertical }
-.btn {
-  border-radius:12px; padding:11px 13px; font-weight:750;
-  font-size:12px; background:#f7f0ec; color:#604d48;
+textarea { min-height:65px; resize:vertical }
+.hint { font-size:11px; color:var(--muted); margin:6px 0 0 }
+.row { display:flex; gap:7px; flex-wrap:wrap }
+.row > button { flex:1 }
+.chips { display:flex; gap:6px; flex-wrap:wrap }
+.chip {
+  background:#fffaf8;
+  color:#6e5657;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:7px 10px;
+  font-size:11px;
 }
-.primary { background:#d9879b; color:white }
-.soft { background:#fae9ed; color:#875365 }
-.wide { width:100% }
-.btnrow { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px }
-.btnrow .btn { flex:1 }
-.templates { display:grid; grid-template-columns:repeat(3,1fr); gap:9px }
-.template { padding:0; background:none; text-align:left; color:var(--ink) }
-.thumb {
-  aspect-ratio:9/14; border-radius:11px; border:1px solid #eadbd5;
-  display:flex; align-items:center; justify-content:center;
-  text-align:center; padding:8px; font-size:11px; font-weight:800;
-  white-space:pre-line;
+.chip.active { background:#f5dce3; border-color:#d98ca0; color:#693e4b }
+.vibe-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:7px;
 }
-.template.active .thumb { outline:2px solid #d9879b }
-.template small { display:block; font-size:10px; margin-top:5px; color:var(--muted) }
-.swatches { display:flex; gap:9px; flex-wrap:wrap }
-.swatch {
-  width:29px; height:29px; border-radius:50%;
-  border:2px solid white; box-shadow:0 0 0 1px #e9d9d3;
+.vibe {
+  text-align:left;
+  background:#fffaf8;
+  border:1px solid var(--line);
+  padding:10px;
+  min-height:45px;
+  color:var(--ink);
 }
-.swatch.selected { box-shadow:0 0 0 2px #bd7889 }
-.choice { display:flex; gap:6px; flex-wrap:wrap }
-.choice button {
-  border:1px solid var(--line); background:#fffaf7;
-  color:#6e5752; border-radius:99px; padding:7px 9px; font-size:11px;
-}
-.choice button.selected { background:#f4d8df; border-color:#d9879b }
-.center { display:flex; flex-direction:column; align-items:center; gap:14px }
-.canvas-top { display:flex; justify-content:space-between; width:100%; font-size:13px }
-.story-wrap {
-  width:min(100%,350px); padding:8px; background:white;
-  border:1px solid var(--line); border-radius:27px;
+.vibe.active { background:#f5dce3; border:1px solid var(--pink) }
+.vibe-symbol { font-size:17px; margin-right:5px }
+.preview-column { display:flex; flex-direction:column; align-items:center; gap:12px }
+.preview-heading { display:flex; justify-content:space-between; gap:10px; width:100%; font-size:12px }
+.preview-shell {
+  width:min(100%,355px);
+  background:white;
+  border:1px solid var(--line);
+  padding:7px;
+  border-radius:25px;
 }
 #story {
-  position:relative; width:100%; aspect-ratio:9/16; overflow:hidden;
-  border-radius:20px; background:linear-gradient(145deg,#f3d9df,#faeee4);
+  position:relative;
+  width:100%;
+  aspect-ratio:9/16;
+  overflow:hidden;
+  border-radius:19px;
+  background:linear-gradient(145deg,#f3d9df,#faeee4);
+  color:#5b3c43;
 }
-.story-bg { position:absolute; inset:0; background:linear-gradient(145deg,#f3d9df,#faeee4) }
-.orb { position:absolute; border-radius:50%; opacity:.55 }
-.orb.one { width:65%; aspect-ratio:1; right:-20%; top:-6%; background:#fff8ef }
-.orb.two { width:80%; aspect-ratio:1; left:-30%; bottom:-9%; background:#e8b7c1 }
-.story-inner {
-  position:absolute; inset:7%; display:flex; flex-direction:column;
-  align-items:center; justify-content:center; text-align:center; gap:12px;
+#bgDecor { position:absolute; inset:0; overflow:hidden; pointer-events:none }
+.orb { position:absolute; border-radius:50%; opacity:.45 }
+.orb-a { width:65%; aspect-ratio:1; top:-8%; right:-20%; background:#fffaf0 }
+.orb-b { width:80%; aspect-ratio:1; bottom:-12%; left:-28%; background:#e9b9c4 }
+.story-content {
+  position:absolute;
+  inset:7% 7% 11%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  gap:10px;
 }
-.story-kicker { font-size:11px; letter-spacing:2px; font-weight:800 }
-.story-title {
-  font-family:Georgia,serif; font-size:clamp(25px,7vw,44px);
-  line-height:1.06; overflow-wrap:anywhere; white-space:pre-wrap;
+#outKicker { font-size:clamp(8px,2.5vw,11px); font-weight:800; letter-spacing:2px }
+#outTitle {
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(23px,6.6vw,39px);
+  line-height:1.08;
+  overflow-wrap:anywhere;
+  white-space:pre-wrap;
+  max-width:100%;
 }
-.story-sub { font-size:14px; line-height:1.4; white-space:pre-wrap; overflow-wrap:anywhere }
-.story-sticker { font-size:38px }
-.story-photo {
-  width:100%; max-width:100%; max-height:35%;
-  object-fit:contain; border-radius:13px; display:none;
+#outSub {
+  font-size:clamp(10px,3vw,14px);
+  line-height:1.4;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  max-width:100%;
 }
-.story-footer {
-  position:absolute; bottom:3%; left:7%; right:7%;
-  display:flex; justify-content:space-between; font-size:9px; opacity:.65;
+#outSticker { font-size:29px; line-height:1.1 }
+.photo-frame {
+  width:100%;
+  max-height:34%;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  flex-shrink:1;
 }
-.notice { text-align:center; color:var(--muted); font-size:11px; max-width:330px }
-.right-stack { display:grid; gap:14px }
-.game-card { border:1px solid var(--line); border-radius:13px; padding:12px; margin-bottom:8px }
-.game-card strong { font-size:12px; display:block; margin-bottom:8px }
-footer { text-align:center; padding:20px; color:#a28f89; font-size:11px }
-@media(max-width:940px) {
-  .workspace { grid-template-columns:1fr 1fr }
-  .right-stack { grid-column:1/-1; grid-template-columns:1fr 1fr }
+.photo-frame img {
+  display:block;
+  width:100%;
+  height:100%;
+  max-height:100%;
+  object-fit:contain;
 }
-@media(max-width:620px) {
-  header { padding:14px }
-  main { padding:20px 12px 34px }
-  .workspace { grid-template-columns:1fr }
-  .center { grid-row:1 }
-  .story-wrap { width:min(82%,320px) }
-  .right-stack { grid-column:auto; grid-template-columns:1fr }
+.photo-frame.polaroid {
+  background:#fffdf9;
+  padding:7px 7px 16px;
+  box-shadow:0 4px 15px #00000016;
+}
+.photo-frame.classic {
+  border:5px solid #fffaf4;
+  outline:2px solid currentColor;
+  outline-offset:-2px;
+}
+.photo-frame.double {
+  border:5px double currentColor;
+  padding:4px;
+}
+.story-watermark {
+  position:absolute;
+  bottom:3%;
+  left:4%;
+  right:4%;
+  z-index:5;
+  text-align:center;
+  font:700 clamp(8px,2.3vw,11px)/1.2 system-ui,sans-serif;
+  letter-spacing:.2px;
+  white-space:nowrap;
+  text-shadow:0 1px 4px #ffffff70;
+  pointer-events:none;
+}
+.preview-note { text-align:center; color:var(--muted); font-size:11px; max-width:340px }
+.daily-info { padding:10px; border-radius:12px; background:#fff5f5; font-size:12px }
+.fill-list { display:grid; gap:7px }
+.fill-option {
+  display:block;
+  width:100%;
+  text-align:left;
+  background:#fffaf8;
+  border:1px solid var(--line);
+  padding:10px;
+  color:var(--ink);
+}
+.fill-option.active { background:#f7e4e9; border-color:var(--pink) }
+.ad-area {
+  max-width:900px;
+  margin:22px auto 0;
+  min-height:90px;
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#fff;
+  text-align:center;
+}
+.ad-label { color:#a08d87; font-size:9px; letter-spacing:1px; margin-bottom:5px }
+footer { text-align:center; padding:20px 12px; color:var(--muted); font-size:11px }
+@media(max-width:760px) {
+  header { position:relative }
+  .layout { grid-template-columns:1fr }
+  .preview-column { grid-row:1 }
+  .preview-shell { width:min(78%,330px) }
+  .editor { grid-row:2 }
+  main { padding:20px 12px }
 }
 </style>
 </head>
+
 <body>
 <header>
   <div>
-    <div class="brand">story<span>maker</span> ✿</div>
-    <div class="tag">deine Story. dein Vibe.</div>
+    <div class="logo">story<span>maker</span> ✿</div>
+    <div style="font-size:10px;color:#927d7c">deine Story. dein Vibe.</div>
   </div>
-  <button class="btn primary" id="topExport">Story exportieren ↗</button>
+  <div class="header-actions">
+    <button class="secondary" id="resetBtn">↺ Story zurücksetzen</button>
+    <button class="primary" id="exportBtn">Story exportieren ↗</button>
+  </div>
 </header>
 
 <main>
-<section class="intro">
-  <div class="eyebrow">INSTAGRAM STORY STUDIO</div>
-  <h1>Make it a <span style="color:#cc8294;font-family:Georgia,serif;font-style:italic">whole vibe.</span></h1>
-  <p>Gestalte ästhetische Stories mit Vorlagen, Farben, Fotos und Story-Games. Kostenlos und direkt im Browser.</p>
-</section>
-
-<div class="workspace">
-<aside class="panel">
-  <h2>Dein Story-Editor</h2>
-  <div class="tabs">
-    <button class="tab active" data-tab="design">Design</button>
-    <button class="tab" data-tab="text">Text</button>
-    <button class="tab" data-tab="photo">Foto</button>
-  </div>
-
-  <div id="design" class="section active">
-    <div class="field">
-      <label>Vorlage auswählen</label>
-      <div class="templates" id="templates">
-        <button class="template active" data-template="quote"><div class="thumb" style="background:#f2d3dc">little<br>reminder ♡</div><small>Soft Quote</small></button>
-        <button class="template" data-template="poll"><div class="thumb" style="background:#e8c5cf">THIS<br>OR THAT?</div><small>Umfrage</small></button>
-        <button class="template" data-template="dump"><div class="thumb" style="background:#d6c3ae">PHOTO<br>DUMP ✷</div><small>Photo Dump</small></button>
-        <button class="template" data-template="birthday"><div class="thumb" style="background:#f5c7d0">IT'S MY<br>BIRTHDAY!</div><small>Birthday</small></button>
-        <button class="template" data-template="mood"><div class="thumb" style="background:#d9c5b9">CURRENT<br>MOOD ☁</div><small>Mood</small></button>
-        <button class="template" data-template="game"><div class="thumb" style="background:#e7b8c5">WHO KNOWS<br>ME BEST?</div><small>Story Game</small></button>
-        <button class="template" data-template="travel"><div class="thumb" style="background:#b8d8d5">POSTCARD<br>FROM…</div><small>Travel Diary</small></button>
-        <button class="template" data-template="playlist"><div class="thumb" style="background:#c9c5e8">ON REPEAT<br>♫</div><small>Playlist</small></button>
-        <button class="template" data-template="wishlist"><div class="thumb" style="background:#f0d4a8">LITTLE<br>WISHLIST</div><small>Wishlist</small></button>
-        <button class="template" data-template="recap"><div class="thumb" style="background:#d7c7b7">LIFE LATELY<br>✷</div><small>Life Lately</small></button>
-        <button class="template" data-template="goals"><div class="thumb" style="background:#cbd8c6">GOALS<br>THIS MONTH</div><small>Monatsziele</small></button>
-        <button class="template" data-template="favorites"><div class="thumb" style="background:#f3c6cc">CURRENT<br>FAVOURITES</div><small>Favoriten</small></button>
-        <button class="template" data-template="qna"><div class="thumb" style="background:#d2dff0">ASK ME<br>ANYTHING</div><small>Q&A</small></button>
-        <button class="template" data-template="checklist"><div class="thumb" style="background:#e8d8b8">SUNDAY<br>RESET</div><small>Checkliste</small></button>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Farbpalette</label>
-      <div class="swatches">
-        <button class="swatch selected" title="Rosé" data-colors="#f3d9df,#faeee4,#5b3c43" style="background:#f3d9df"></button>
-        <button class="swatch" title="Latte" data-colors="#e4d2bf,#f8eee2,#554237" style="background:#e4d2bf"></button>
-        <button class="swatch" title="Lavender" data-colors="#d9c9eb,#f5eafa,#493b5b" style="background:#d9c9eb"></button>
-        <button class="swatch" title="Sage" data-colors="#cbd8c6,#f1eee2,#3e5141" style="background:#cbd8c6"></button>
-        <button class="swatch" title="Night" data-colors="#302a35,#594352,#fff1e8" style="background:#302a35"></button>
-        <button class="swatch" title="Ocean" data-colors="#b8d8e8,#e7f2f5,#244858" style="background:#b8d8e8"></button>
-        <button class="swatch" title="Butter" data-colors="#f5df9b,#fff5d9,#594b27" style="background:#f5df9b"></button>
-        <button class="swatch" title="Cherry" data-colors="#a9364f,#f4c6cc,#fff4ed" style="background:#a9364f"></button>
-        <button class="swatch" title="Matcha" data-colors="#a8b99a,#e5eadb,#344333" style="background:#a8b99a"></button>
-        <button class="swatch" title="Sky" data-colors="#c4d9f3,#f0f5ff,#354968" style="background:#c4d9f3"></button>
-        <button class="swatch" title="Sunset" data-colors="#f2a57e,#f7d9a8,#653d3d" style="background:#f2a57e"></button>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Sticker</label>
-      <div class="choice">
-        <button class="selected" data-sticker="♡">♡ Herz</button>
-        <button data-sticker="✦">✦ Sparkle</button>
-        <button data-sticker="☁">☁ Cloud</button>
-        <button data-sticker="✿">✿ Flower</button>
-        <button data-sticker="">Keiner</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="text" class="section">
-    <div class="field"><label>Kleine Überschrift</label><input id="kicker" value="A LITTLE REMINDER"></div>
-    <div class="field"><label>Haupttext</label><textarea id="titleText">you are allowed to grow at your own pace.</textarea></div>
-    <div class="field"><label>Zusatztext</label><textarea id="subText">save this for a day you need it ♡</textarea></div>
-    <div class="field">
-      <label>Schriftgröße</label>
-      <input id="fontSize" type="range" min="24" max="58" value="44">
-      <span id="fontValue" class="small">44</span>
-    </div>
-    <div class="field">
-      <label>Ausrichtung</label>
-      <div class="choice">
-        <button class="selected" data-align="center">Zentriert</button>
-        <button data-align="left">Links</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="photo" class="section">
-    <div class="field">
-      <label>Eigenes Foto hinzufügen</label>
-      <input id="photoInput" type="file" accept="image/*">
-      <p class="small">Dein Foto bleibt auf deinem Gerät.</p>
-    </div>
-    <div class="field">
-      <label>Foto-Anzeige</label>
-      <div class="choice">
-        <button class="selected" data-fit="contain">Ganzes Foto</button>
-        <button data-fit="cover">Ausfüllen</button>
-      </div>
-      <p class="small">Das Foto wird nicht gestreckt. Beim Ausfüllen können Ränder abgeschnitten werden.</p>
-    </div>
-    <div class="field">
-      <label>Story-Rahmen</label>
-      <div class="choice">
-        <button class="selected" data-frame="none">Keiner</button>
-        <button data-frame="thin">Fein</button>
-        <button data-frame="double">Doppelt</button>
-      </div>
-    </div>
-    <button class="btn" id="removePhoto">Foto entfernen</button>
-  </div>
-
-  <div class="btnrow">
-    <button class="btn" id="reset">Zurücksetzen</button>
-    <button class="btn primary" id="export">PNG herunterladen ↓</button>
-  </div>
-</aside>
-
-<section class="center">
-  <div class="canvas-top"><strong>Live-Vorschau</strong><span>9:16 · Instagram Story</span></div>
-  <div class="story-wrap">
-    <div id="story">
-      <div class="story-bg" id="storyBg"></div>
-      <div class="orb one" id="orb1"></div>
-      <div class="orb two" id="orb2"></div>
-      <div class="story-inner" id="storyInner">
-        <div class="story-kicker" id="outKicker">A LITTLE REMINDER</div>
-        <img id="outPhoto" class="story-photo" alt="Dein Story-Foto">
-        <div class="story-sticker" id="outSticker">♡</div>
-        <div class="story-title" id="outTitle">you are allowed to grow at your own pace.</div>
-        <div class="story-sub" id="outSub">save this for a day you need it ♡</div>
-      </div>
-      <div class="story-footer"><span>@yourhandle</span><span>made with storymaker ✿</span></div>
-    </div>
-  </div>
-  <button class="btn primary wide" id="export2">♡ Story herunterladen</button>
-  <div class="notice">Deine Story wird als PNG-Datei gespeichert.</div>
-</section>
-
-<aside class="right-stack">
-  <section class="panel">
-    <h2>✦ Story-Spiel Generator</h2>
-    <p class="small">Die Abstimmung kannst du nach dem Export in Instagram ergänzen.</p>
-    <div class="game-card">
-      <strong>THIS OR THAT</strong>
-      <div class="choice" id="thisThat">
-        <button data-a="Coffee ☕" class="selected">Coffee ☕</button>
-        <button data-a="Matcha 🍵">Matcha 🍵</button>
-      </div>
-    </div>
-    <div class="game-card">
-      <strong>WER KENNT MICH BESSER?</strong>
-      <div class="choice" id="knowMe">
-        <button data-a="Bestie 💗" class="selected">Bestie 💗</button>
-        <button data-a="Familie 🫶">Familie 🫶</button>
-      </div>
-    </div>
-    <div class="game-card">
-      <strong>MEIN AKTUELLER VIBE</strong>
-      <div class="choice" id="moodChoice">
-        <button data-a="Soft girl 🎀" class="selected">Soft girl 🎀</button>
-        <button data-a="Main character ✨">Main character ✨</button>
-        <button data-a="Cozy era ☁">Cozy era ☁</button>
-      </div>
-    </div>
-    <button class="btn soft wide" id="useGame">Auswahl in Story übernehmen ↗</button>
+  <section class="intro">
+    <div class="eyebrow">YOUR DAILY STORY STUDIO</div>
+    <h1>Make it your <span style="font-family:Georgia,serif;font-style:italic;color:#cf8195">vibe.</span></h1>
+    <p>Deine täglichen Story-Ideen, kleine Designmomente und Vorlagen zum Mitmachen.</p>
   </section>
-  <section class="panel">
-    <h2>♡ Idee für dein Instagram</h2>
-    <p class="small">Zeige in einem Reel, wie du in wenigen Sekunden eine eigene ästhetische Story erstellst.</p>
-  </section>
-</aside>
-</div>
+
+  <div class="layout">
+    <section class="panel editor">
+      <h2>Dein Editor ✿</h2>
+
+      <div class="group">
+        <h3>✦ Story of the Day</h3>
+        <div class="daily-info" id="dailyInfo">Deine heutige Vorlage wird geladen …</div>
+        <div class="row" style="margin-top:8px">
+          <button class="chip active" id="todayBtn">Heutige Vorlage</button>
+          <button class="chip" id="nextDayBtn">Andere Vorlage ↻</button>
+        </div>
+        <div class="field">
+          <label>Alle 50 Vorlagen</label>
+          <select id="templateSelect"></select>
+        </div>
+      </div>
+
+      <div class="group">
+        <h3>♡ Mein aktueller Vibe</h3>
+        <div class="vibe-grid" id="vibeGrid">
+          <button class="vibe active" data-vibe="Out of office"><span class="vibe-symbol">☼</span>Out of office</button>
+          <button class="vibe" data-vibe="Nur am Chillen"><span class="vibe-symbol">☾</span>Nur am Chillen</button>
+          <button class="vibe" data-vibe="Wird schon"><span class="vibe-symbol">♡</span>Wird schon</button>
+          <button class="vibe" data-vibe="Chaos mit System"><span class="vibe-symbol">⁘</span>Chaos mit System</button>
+          <button class="vibe" data-vibe="On fire"><span class="vibe-symbol">♨</span>On fire</button>
+          <button class="vibe" data-vibe="Läuft"><span class="vibe-symbol">✓</span>Läuft</button>
+          <button class="vibe" data-vibe="Glücklich verwirrt"><span class="vibe-symbol">〰</span>Glücklich verwirrt</button>
+        </div>
+        <p class="hint">Ein Tipp – und dein Vibe erscheint direkt in der Vorschau.</p>
+      </div>
+
+      <div class="group">
+        <h3>✍ Text gestalten</h3>
+        <div class="field">
+          <label>Kleine Überschrift</label>
+          <input type="text" id="kicker" value="MY CURRENT VIBE" maxlength="70">
+        </div>
+        <div class="field">
+          <label>Haupttext</label>
+          <textarea id="titleText" maxlength="500">Out of office</textarea>
+        </div>
+        <div class="field">
+          <label>Zusatztext</label>
+          <textarea id="subText" maxlength="500">mental schon im Urlaub ☼</textarea>
+        </div>
+        <div class="field">
+          <label>Fill-in-the-Blank – Community-Vorlagen</label>
+          <div class="fill-list" id="fillList">
+            <button class="fill-option" data-fill="annoy">☁ 3 Dinge, die mich heute nerven</button>
+            <button class="fill-option" data-fill="song">♫ Song des Tages</button>
+            <button class="fill-option" data-fill="either">♡ Dieses oder Jenes</button>
+            <button class="fill-option" data-fill="wish">✦ Ein Wunsch für diese Woche</button>
+            <button class="fill-option" data-fill="happy">☼ Das hat mich heute glücklich gemacht</button>
+            <button class="fill-option" data-fill="confession">♡ Eine kleine Beichte</button>
+            <button class="fill-option" data-fill="recommend">✧ Das musst du unbedingt ausprobieren</button>
+            <button class="fill-option" data-fill="question">? Frag mich etwas</button>
+            <button class="fill-option" data-fill="hot">♨ Unpopular opinion</button>
+            <button class="fill-option" data-fill="finish">✍ Beende diesen Satz …</button>
+          </div>
+          <p class="hint">Wähle eine Idee aus und passe den Text an. Den passenden Umfrage- oder Frage-Sticker kannst du anschließend in Instagram ergänzen.</p>
+        </div>
+      </div>
+
+      <div class="group">
+        <h3>🎨 Farben</h3>
+        <div class="chips" id="paletteList">
+          <button class="chip active" data-palette="rose">Rosé</button>
+          <button class="chip" data-palette="latte">Latte</button>
+          <button class="chip" data-palette="lavender">Lavendel</button>
+          <button class="chip" data-palette="sage">Sage</button>
+          <button class="chip" data-palette="night">Night</button>
+          <button class="chip" data-palette="ocean">Ocean</button>
+          <button class="chip" data-palette="butter">Butter</button>
+          <button class="chip" data-palette="cherry">Cherry</button>
+          <button class="chip" data-palette="matcha">Matcha</button>
+          <button class="chip" data-palette="sky">Sky</button>
+          <button class="chip" data-palette="sunset">Sunset</button>
+        </div>
+        <div class="field">
+          <label>Sticker / Symbol</label>
+          <div class="chips" id="stickerList">
+            <button class="chip active" data-sticker="♡">♡</button>
+            <button class="chip" data-sticker="✦">✦</button>
+            <button class="chip" data-sticker="☼">☼</button>
+            <button class="chip" data-sticker="☁">☁</button>
+            <button class="chip" data-sticker="✓">✓</button>
+            <button class="chip" data-sticker="♫">♫</button>
+            <button class="chip" data-sticker="">Keiner</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="group">
+        <h3>🖼 Foto & Bilderrahmen</h3>
+        <div class="field">
+          <label>Eigenes Foto</label>
+          <input type="file" id="photoInput" accept="image/*">
+          <p class="hint">Das Foto wird lokal im Browser verarbeitet.</p>
+        </div>
+        <div class="field">
+          <label>Foto-Anzeige</label>
+          <div class="chips">
+            <button class="chip active" data-fit="contain">Ganzes Foto</button>
+            <button class="chip" data-fit="cover">Ausfüllen</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Bilderrahmen</label>
+          <div class="chips">
+            <button class="chip active" data-frame="none">Keiner</button>
+            <button class="chip" data-frame="polaroid">Polaroid</button>
+            <button class="chip" data-frame="classic">Classic</button>
+            <button class="chip" data-frame="double">Double</button>
+          </div>
+        </div>
+        <button class="chip" id="removePhoto">Foto entfernen</button>
+      </div>
+    </section>
+
+    <section class="preview-column">
+      <div class="preview-heading">
+        <strong>Live-Vorschau</strong>
+        <span>Story · 9:16</span>
+      </div>
+
+      <div class="preview-shell">
+        <div id="story">
+          <div id="bgDecor">
+            <div class="orb orb-a"></div>
+            <div class="orb orb-b"></div>
+          </div>
+          <div class="story-content" id="storyContent">
+            <div id="outKicker">MY CURRENT VIBE</div>
+            <div class="photo-frame" id="photoFrame">
+              <img id="outPhoto" alt="Dein Foto">
+            </div>
+            <div id="outSticker">♡</div>
+            <div id="outTitle">Out of office</div>
+            <div id="outSub">mental schon im Urlaub ☼</div>
+          </div>
+          <div class="story-watermark">onlyscheli.com/storymaker</div>
+        </div>
+      </div>
+
+      <div class="preview-note">
+        Die Website-Adresse bleibt unten fest platziert und wird beim Export mitgespeichert.
+      </div>
+      <button class="primary" id="exportPreview" style="width:min(100%,355px)">Story exportieren ↗</button>
+
+      <!--
+        ADSENSE:
+        Hier kann ein von Google AdSense erstellter Anzeigenblock
+        eingebaut werden. Erstelle zuerst einen Anzeigenblock in deinem
+        AdSense-Konto und setze dessen echte data-ad-slot-ID ein.
+        Keine Anzeige als erzwungenes Popup vor dem Story-Export.
+      -->
+      <div class="ad-area">
+        <div class="ad-label">WERBUNG</div>
+        <!-- Nach Freigabe und Einrichtung in AdSense den echten Anzeigenblock einsetzen. -->
+        <p class="hint">Anzeigenbereich</p>
+      </div>
+    </section>
+  </div>
 </main>
 
-<footer>StoryMaker · Kostenloses Browser-Tool · Deine Bilder bleiben auf deinem Gerät.</footer>
+<footer>StoryMaker · onlyscheli.com/storymaker · Made with ♡</footer>
 
 <script>
 const $ = id => document.getElementById(id);
 
-let colors = ['#f3d9df','#faeee4','#5b3c43'];
-let sticker = '♡';
-let align = 'center';
-let photoUrl = '';
-let photoFit = 'contain';
-let frame = 'none';
-
-const presets = {
-  quote:['A LITTLE REMINDER','you are allowed to grow at your own pace.','save this for a day you need it ♡','♡'],
-  poll:['THIS OR THAT?','coffee or matcha?','vote in my next story ☕🍵','✦'],
-  dump:['LITTLE MOMENTS','a little photo dump','lately, in little pieces ✷','✿'],
-  birthday:['IT’S MY DAY','birthday girl energy','another trip around the sun ♡','🎀'],
-  mood:['CURRENT MOOD','in my soft era','protecting my peace ☁','☁'],
-  game:['LET’S PLAY','who knows me best?','answer with the Instagram question sticker ♡','♡'],
-  travel:['POSTCARD FROM…','wish you were here','collecting moments, not things ✈','✈'],
-  playlist:['ON REPEAT ♫','songs for this chapter','currently living in these songs','♫'],
-  wishlist:['LITTLE WISHLIST','things that make me happy','a few things on my mind ♡','✧'],
-  recap:['LIFE LATELY','little moments, big feelings','a tiny recap of lately ✷','✷'],
-  goals:['NEW MONTH, NEW ENERGY','my little goals','slow progress is still progress ✓','✿'],
-  favorites:['CURRENT FAVOURITES','things I’m loving lately','consider this your sign to try them','♡'],
-  qna:['ASK ME ANYTHING','your turn to ask','drop a question below ↓','✉'],
-  checklist:['SUNDAY RESET','a fresh start','tidy space · clean sheets · slow morning','☁']
+const palettes = {
+  rose:     ['#f3d9df','#faeee4','#5b3c43'],
+  latte:    ['#e4d2bf','#f8eee2','#554237'],
+  lavender: ['#d9c9eb','#f5eafa','#493b5b'],
+  sage:     ['#cbd8c6','#f1eee2','#3e5141'],
+  night:    ['#302a35','#594352','#fff1e8'],
+  ocean:    ['#b8d8e8','#e7f2f5','#244858'],
+  butter:   ['#f5df9b','#fff5d9','#594b27'],
+  cherry:   ['#a9364f','#f4c6cc','#fff4ed'],
+  matcha:   ['#a8b99a','#e5eadb','#344333'],
+  sky:      ['#c4d9f3','#f0f5ff','#354968'],
+  sunset:   ['#f2a57e','#f7d9a8','#653d3d']
 };
 
+const vibes = {
+  'Out of office': ['MY CURRENT VIBE','Out of office','mental schon im Urlaub ☼','☼'],
+  'Nur am Chillen': ['MY CURRENT VIBE','Nur am Chillen','heute bitte alles ganz langsam ☾','☾'],
+  'Wird schon': ['MY CURRENT VIBE','Wird schon','irgendwie wird alles gut ♡','♡'],
+  'Chaos mit System': ['MY CURRENT VIBE','Chaos mit System','ich weiß, was ich tue. meistens. ⁘','⁘'],
+  'On fire': ['MY CURRENT VIBE','On fire','gerade nicht aufzuhalten ♨','♨'],
+  'Läuft': ['MY CURRENT VIBE','Läuft','kleine Schritte, große Wirkung ✓','✓'],
+  'Glücklich verwirrt': ['MY CURRENT VIBE','Glücklich verwirrt','keine Ahnung, aber gute Laune 〰','〰']
+};
+
+const fills = {
+  annoy: ['FILL IN THE BLANK','3 Dinge, die mich heute nerven …','1. ______\n2. ______\n3. ______','☁'],
+  song: ['SONG DES TAGES','Mein Song des Tages ist …','Welcher Song läuft bei dir auf Repeat? ♫','♫'],
+  either: ['DIESES ODER JENES','Was würdest du wählen?','Kaffee oder Matcha?\nMeer oder Berge?','♡'],
+  wish: ['LITTLE WISH','Ein Wunsch für diese Woche …','Mein Wunsch: ______','✦'],
+  happy: ['LITTLE JOY','Das hat mich heute glücklich gemacht …','Kleine Dinge zählen auch. ☼','☼'],
+  confession: ['KLEINE BEICHTE','Eine kleine Beichte …','Ich habe noch nie / Ich habe schon mal …','♡'],
+  recommend: ['MUST TRY','Das musst du unbedingt ausprobieren …','Meine Empfehlung: ______','✧'],
+  question: ['ASK ME ANYTHING','Was wolltest du mich schon immer fragen?','Deine Frage: ______','?'],
+  hot: ['UNPOPULAR OPINION','Eine Meinung, die ich verteidige …','Unpopular opinion: ______','♨'],
+  finish: ['BEENDE DIESEN SATZ','Das Leben wäre besser, wenn …','Deine Antwort: ______','✍']
+};
+
+// 50 Tagesvorlagen: Der Index wechselt täglich und läuft danach wieder von vorn.
+const dailyTemplates = [
+['MONDAY RESET','Diese Woche möchte ich …','ein bisschen mehr bei mir ankommen ♡','☼'],
+['TINY JOYS','3 kleine Dinge, die mich freuen …','Kaffee, Sonne und gute Menschen.','♡'],
+['CURRENT MOOD','Mein heutiger Vibe ist …','soft, langsam und zufrieden ☁','☁'],
+['SONG OF THE DAY','Der Soundtrack zu heute …','Welcher Song passt zu deinem Tag? ♫','♫'],
+['LITTLE WISHLIST','Diese Woche wünsche ich mir …','mehr Zeit für schöne Dinge.','✦'],
+['THIS OR THAT','Was wählst du heute?','Kaffee oder Matcha?','♡'],
+['A LITTLE REMINDER','Du musst nicht alles heute schaffen.','Atme durch. Du machst das gut.','☼'],
+['PHOTO DUMP','Kleine Momente aus meinem Alltag','Das Leben passiert zwischendurch.','✿'],
+['MY COMFORTS','Das macht meinen Tag besser …','Lieblingsessen, frische Bettwäsche, Ruhe.','♡'],
+['WEEKEND MODE','Mein Plan fürs Wochenende …','Weniger müssen, mehr wollen.','☾'],
+['CURRENT FAVOURITES','Dinge, die ich gerade liebe …','Teile auch deine Favoriten.','✧'],
+['LITTLE CONFESSION','Eine kleine Beichte …','Okay, jetzt bist du dran.','♡'],
+['SUNDAY RESET','Heute nehme ich mir Zeit für …','Ordnung, Ruhe und einen Neustart.','☁'],
+['MOOD CHECK','Wie fühlst du dich heute?','Dein Gefühl darf da sein.','♡'],
+['DREAM DAY','Ein perfekter Tag wäre …','Erzähl mir von deinem Traumtag.','☼'],
+['MY HAPPY PLACE','Hier kann ich durchatmen …','Wo ist dein Happy Place?','✿'],
+['3 THINGS','Drei Dinge, für die ich dankbar bin …','1. ___  2. ___  3. ___','♡'],
+['LITTLE GOALS','Ein kleiner Schritt für mich …','Auch kleine Fortschritte zählen.','✓'],
+['UNPOPULAR OPINION','Eine Meinung von mir …','Agree or disagree?','♨'],
+['TRAVEL DREAMS','Als Nächstes möchte ich …','Neue Orte, neue Erinnerungen.','✈'],
+['SELF-CARE','Heute tue ich mir etwas Gutes …','Was tut dir gerade gut?','☾'],
+['MY VIBE','Heute bin ich eher …','Chillen oder Abenteuer?','〰'],
+['QUESTION TIME','Eine Frage an euch …','Was wolltet ihr immer schon wissen?','?'],
+['LIFE LATELY','Das geht gerade in meinem Leben …','Ein kleines Update von mir.','✿'],
+['SOMETHING NEW','Das möchte ich ausprobieren …','Was steht auf deiner Liste?','✦'],
+['COFFEE TALK','Meine kleine Alltagstheorie …','Erzähl mir deine.','☕'],
+['FAVOURITE MEMORY','Ein Moment, den ich liebe …','Welche Erinnerung macht dich glücklich?','♡'],
+['WEEKLY WINS','Darauf bin ich stolz …','Kleine Erfolge verdienen Liebe.','✓'],
+['MY PLAYLIST','Songs, die mich gerade begleiten …','Drop your favourite song.','♫'],
+['A LITTLE WISH','Wenn heute alles möglich wäre …','Ich würde ______.','✧'],
+['GET TO KNOW ME','Eine Sache über mich …','Was soll ich als Nächstes erzählen?','♡'],
+['THIS MADE ME SMILE','Heute musste ich lachen, weil …','Was hat dich heute zum Lachen gebracht?','☼'],
+['CURRENT OBSESSION','Ich bin gerade besessen von …','Deine aktuelle Obsession?','✦'],
+['SLOW MORNING','Mein perfekter Morgen …','Langsam starten, gut ankommen.','☕'],
+['CHOOSE YOUR VIBE','Heute lieber …','Meer oder Berge?','☁'],
+['LITTLE LESSON','Was ich gerade lerne …','Man wächst jeden Tag ein bisschen.','✿'],
+['FRIDAY FEELING','Mein Freitagsgefühl …','Was steht bei dir an?','☼'],
+['FUTURE ME','An mein zukünftiges Ich …','Vergiss nicht, wie weit du gekommen bist.','♡'],
+['ONE WORD','Mein Tag in einem Wort …','Wie lautet deins?','〰'],
+['COMFORT FOOD','Das esse ich immer gern …','Was ist dein Wohlfühlessen?','♡'],
+['A SMALL CHALLENGE','Heute probiere ich …','Mach mit und erzähl davon.','✓'],
+['MY HAPPY LIST','Drei Dinge, die mich glücklich machen …','1. ___  2. ___  3. ___','✦'],
+['IF I COULD','Wenn ich jetzt überall sein könnte …','Ich wäre ______.','✈'],
+['LITTLE RITUAL','Das gehört zu meinem Alltag …','Welche Routine liebst du?','☾'],
+['WEEKEND WISH','Mein Wunsch fürs Wochenende …','Zeit für die Dinge, die guttun.','♡'],
+['ASK YOURSELF','Was brauche ich gerade wirklich?','Eine kleine Erinnerung, innezuhalten.','☁'],
+['GOOD THINGS','Etwas Gutes, das heute passiert ist …','Auch die kleinen Dinge zählen.','☼'],
+['MY NEXT CHAPTER','Als Nächstes möchte ich …','Neues Kapitel, neue Möglichkeiten.','✦'],
+['FILL THE BLANK','Heute wäre mein Tag perfekt, wenn …','Deine Ergänzung: ______','✍'],
+['SEE YOU TOMORROW','Eine Sache, die ich mitnehme …','Morgen ist eine neue Chance.','♡']
+];
+
+let colors = palettes.rose;
+let currentSticker = '♡';
+let currentPhoto = null;
+let fitMode = 'contain';
+let frameMode = 'none';
+let selectedVibe = 'Out of office';
+let currentDailyIndex = getDailyIndex();
+
+function getDailyIndex() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(),0,0);
+  const day = Math.floor((now - start) / 86400000);
+  return (day - 1) % dailyTemplates.length;
+}
+
+function setText(kicker,title,sub,sticker) {
+  $('kicker').value = kicker;
+  $('titleText').value = title;
+  $('subText').value = sub;
+  currentSticker = sticker || '';
+  updateActiveChips('sticker',currentSticker);
+  render();
+}
+
+function applyVibe(name) {
+  const preset = vibes[name];
+  if (!preset) return;
+  selectedVibe = name;
+  document.querySelectorAll('[data-vibe]').forEach(button => {
+    button.classList.toggle('active',button.dataset.vibe === name);
+  });
+  setText(...preset);
+}
+
+function updateActiveChips(type,value) {
+  document.querySelectorAll('[data-' + type + ']').forEach(button => {
+    button.classList.toggle('active',button.dataset[type] === value);
+  });
+}
+
 function render() {
-  $('storyBg').style.background = `linear-gradient(145deg,${colors[0]},${colors[1]})`;
-  $('orb1').style.background = colors[1];
-  $('orb2').style.background = colors[0];
+  $('story').style.background = `linear-gradient(145deg,${colors[0]},${colors[1]})`;
   $('story').style.color = colors[2];
+  document.querySelector('.orb-a').style.background = colors[1];
+  document.querySelector('.orb-b').style.background = colors[0];
+
   $('outKicker').textContent = $('kicker').value;
   $('outTitle').textContent = $('titleText').value;
   $('outSub').textContent = $('subText').value;
-  $('outSticker').textContent = sticker;
-  $('outTitle').style.fontSize = $('fontSize').value + 'px';
-  $('fontValue').textContent = $('fontSize').value;
-  $('storyInner').style.textAlign = align;
-  $('storyInner').style.alignItems = align === 'left' ? 'flex-start' : 'center';
-  $('outPhoto').style.display = photoUrl ? 'block' : 'none';
-  $('outPhoto').style.objectFit = photoFit;
-  if (photoUrl) $('outPhoto').src = photoUrl;
-  $('story').style.boxShadow = frame === 'none' ? 'none' :
-    frame === 'thin' ? `inset 0 0 0 7px ${colors[2]}` :
-    `inset 0 0 0 7px ${colors[2]}, inset 0 0 0 18px transparent`;
+  $('outSticker').textContent = currentSticker;
+
+  const photoFrame = $('photoFrame');
+  photoFrame.className = 'photo-frame';
+  if (frameMode !== 'none') photoFrame.classList.add(frameMode);
+
+  if (currentPhoto) {
+    photoFrame.style.display = 'flex';
+    $('outPhoto').src = currentPhoto;
+    $('outPhoto').style.objectFit = fitMode;
+  } else {
+    photoFrame.style.display = 'none';
+    $('outPhoto').removeAttribute('src');
+  }
+
+  // Die Vorschau verkleinert Text automatisch, wenn er länger wird.
+  const content = $('storyContent');
+  const title = $('outTitle');
+  const sub = $('outSub');
+  title.style.fontSize = 'clamp(18px, 6.6vw, 39px)';
+  sub.style.fontSize = 'clamp(9px, 2.8vw, 14px)';
+  requestAnimationFrame(() => {
+    let size = 39;
+    while (content.scrollHeight > content.clientHeight && size > 17) {
+      size -= 1;
+      title.style.fontSize = `clamp(17px, ${size / 6}px, ${size}px)`;
+    }
+  });
 }
 
-document.querySelectorAll('.tab').forEach(button => {
-  button.onclick = () => {
-    document.querySelectorAll('.tab').forEach(item => item.classList.toggle('active',item === button));
-    document.querySelectorAll('.section').forEach(item => item.classList.toggle('active',item.id === button.dataset.tab));
-  };
+function populateTemplateSelect() {
+  const select = $('templateSelect');
+  dailyTemplates.forEach((item,index) => {
+    const option = document.createElement('option');
+    option.value = index;
+    option.textContent = String(index+1).padStart(2,'0') + ' · ' + item[0];
+    select.appendChild(option);
+  });
+  select.value = currentDailyIndex;
+}
+
+function loadDaily(index) {
+  currentDailyIndex = (index + dailyTemplates.length) % dailyTemplates.length;
+  const item = dailyTemplates[currentDailyIndex];
+  $('templateSelect').value = currentDailyIndex;
+  $('dailyInfo').textContent = `Vorlage ${currentDailyIndex+1} von 50 · ${item[0]}`;
+  document.querySelectorAll('[data-vibe]').forEach(button => button.classList.remove('active'));
+  setText(...item);
+}
+
+document.querySelectorAll('[data-vibe]').forEach(button => {
+  button.addEventListener('click', () => applyVibe(button.dataset.vibe));
 });
 
-document.querySelectorAll('.template').forEach(button => {
-  button.onclick = () => {
-    const preset = presets[button.dataset.template];
-    document.querySelectorAll('.template').forEach(item => item.classList.toggle('active',item === button));
-    $('kicker').value = preset[0];
-    $('titleText').value = preset[1];
-    $('subText').value = preset[2];
-    sticker = preset[3];
-    document.querySelectorAll('[data-sticker]').forEach(item => item.classList.toggle('selected',item.dataset.sticker === sticker));
+document.querySelectorAll('[data-palette]').forEach(button => {
+  button.addEventListener('click', () => {
+    colors = palettes[button.dataset.palette];
+    updateActiveChips('palette',button.dataset.palette);
     render();
-  };
-});
-
-document.querySelectorAll('.swatch').forEach(button => {
-  button.onclick = () => {
-    colors = button.dataset.colors.split(',');
-    document.querySelectorAll('.swatch').forEach(item => item.classList.toggle('selected',item === button));
-    render();
-  };
-});
-
-document.querySelectorAll('[data-fit]').forEach(button => {
-  button.onclick = () => {
-    photoFit = button.dataset.fit;
-    document.querySelectorAll('[data-fit]').forEach(item => item.classList.toggle('selected',item === button));
-    render();
-  };
-});
-
-document.querySelectorAll('[data-frame]').forEach(button => {
-  button.onclick = () => {
-    frame = button.dataset.frame;
-    document.querySelectorAll('[data-frame]').forEach(item => item.classList.toggle('selected',item === button));
-    render();
-  };
+  });
 });
 
 document.querySelectorAll('[data-sticker]').forEach(button => {
-  button.onclick = () => {
-    sticker = button.dataset.sticker;
-    document.querySelectorAll('[data-sticker]').forEach(item => item.classList.toggle('selected',item === button));
+  button.addEventListener('click', () => {
+    currentSticker = button.dataset.sticker;
+    updateActiveChips('sticker',currentSticker);
     render();
-  };
+  });
 });
 
-['kicker','titleText','subText','fontSize'].forEach(id => $(id).addEventListener('input',render));
-
-document.querySelectorAll('[data-align]').forEach(button => {
-  button.onclick = () => {
-    align = button.dataset.align;
-    document.querySelectorAll('[data-align]').forEach(item => item.classList.toggle('selected',item === button));
+document.querySelectorAll('[data-fit]').forEach(button => {
+  button.addEventListener('click', () => {
+    fitMode = button.dataset.fit;
+    updateActiveChips('fit',fitMode);
     render();
-  };
+  });
 });
 
-$('photoInput').onchange = event => {
-  const file = event.target.files[0];
+document.querySelectorAll('[data-frame]').forEach(button => {
+  button.addEventListener('click', () => {
+    frameMode = button.dataset.frame;
+    updateActiveChips('frame',frameMode);
+    render();
+  });
+});
+
+['kicker','titleText','subText'].forEach(id => {
+  $(id).addEventListener('input',render);
+});
+
+$('fillList').addEventListener('click',event => {
+  const button = event.target.closest('[data-fill]');
+  if (!button) return;
+  document.querySelectorAll('[data-fill]').forEach(item => item.classList.toggle('active',item === button));
+  const fill = fills[button.dataset.fill];
+  setText(...fill);
+  $('titleText').focus();
+});
+
+$('templateSelect').addEventListener('change',() => loadDaily(Number($('templateSelect').value)));
+$('todayBtn').addEventListener('click',() => loadDaily(getDailyIndex()));
+$('nextDayBtn').addEventListener('click',() => loadDaily(currentDailyIndex + 1));
+
+$('photoInput').addEventListener('change',event => {
+  const file = event.target.files && event.target.files[0];
   if (!file) return;
-  if (photoUrl) URL.revokeObjectURL(photoUrl);
-  photoUrl = URL.createObjectURL(file);
+  if (!file.type.startsWith('image/')) {
+    alert('Bitte wähle eine Bilddatei aus.');
+    return;
+  }
+  if (currentPhoto) URL.revokeObjectURL(currentPhoto);
+  currentPhoto = URL.createObjectURL(file);
   render();
-};
+});
 
-$('removePhoto').onclick = () => {
-  if (photoUrl) URL.revokeObjectURL(photoUrl);
-  photoUrl = '';
+$('removePhoto').addEventListener('click',() => {
+  if (currentPhoto) URL.revokeObjectURL(currentPhoto);
+  currentPhoto = null;
   $('photoInput').value = '';
   render();
-};
-
-document.querySelectorAll('#thisThat .choice button,#knowMe .choice button,#moodChoice .choice button').forEach(button => {
-  button.onclick = () => {
-    button.parentElement.querySelectorAll('button').forEach(item => item.classList.toggle('selected',item === button));
-  };
 });
 
-$('useGame').onclick = () => {
-  const a = $('thisThat').querySelector('.selected').dataset.a;
-  const b = $('knowMe').querySelector('.selected').dataset.a;
-  const c = $('moodChoice').querySelector('.selected').dataset.a;
-  $('kicker').value = 'LET’S PLAY';
-  $('titleText').value = 'THIS OR THAT?';
-  $('subText').value = a + ' / ' + b + '\nMy vibe: ' + c;
-  sticker = '✦';
-  render();
-  document.querySelector('[data-tab="text"]').click();
-};
+$('resetBtn').addEventListener('click',() => {
+  if (currentPhoto) URL.revokeObjectURL(currentPhoto);
+  currentPhoto = null;
+  $('photoInput').value = '';
+  colors = palettes.rose;
+  fitMode = 'contain';
+  frameMode = 'none';
+  updateActiveChips('palette','rose');
+  updateActiveChips('fit','contain');
+  updateActiveChips('frame','none');
+  document.querySelectorAll('[data-fill]').forEach(button => button.classList.remove('active'));
+  document.querySelectorAll('[data-vibe]').forEach(button => button.classList.remove('active'));
+  document.querySelectorAll('[data-sticker]').forEach(button => button.classList.remove('active'));
+  currentSticker = '♡';
+  loadDaily(getDailyIndex());
+});
 
-async function exportPng() {
-  const canvas = document.createElement('canvas');
-  canvas.width = 1080;
-  canvas.height = 1920;
-  const ctx = canvas.getContext('2d');
+function wrapText(ctx,text,x,y,maxWidth,lineHeight,maxLines) {
+  const paragraphs = String(text).split('\n');
+  let lines = [];
 
-  const gradient = ctx.createLinearGradient(0,0,1080,1920);
-  gradient.addColorStop(0,colors[0]);
-  gradient.addColorStop(1,colors[1]);
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0,0,1080,1920);
-
-  ctx.globalAlpha = .55;
-  ctx.fillStyle = colors[1];
-  ctx.beginPath();
-  ctx.arc(1000,100,340,0,Math.PI*2);
-  ctx.fill();
-
-  ctx.globalAlpha = .5;
-  ctx.fillStyle = colors[0];
-  ctx.beginPath();
-  ctx.arc(0,1770,420,0,Math.PI*2);
-  ctx.fill();
-  ctx.globalAlpha = 1;
-
-  if (frame !== 'none') {
-    ctx.strokeStyle = colors[2];
-    ctx.lineWidth = frame === 'double' ? 7 : 5;
-    ctx.strokeRect(24,24,1032,1872);
-    if (frame === 'double') {
-      ctx.lineWidth = 2;
-      ctx.strokeRect(42,42,996,1836);
+  paragraphs.forEach(paragraph => {
+    if (!paragraph.trim()) {
+      lines.push('');
+      return;
     }
-  }
-
-  const left = align === 'left';
-  const x = left ? 85 : 540;
-  const maxWidth = left ? 900 : 930;
-  ctx.fillStyle = colors[2];
-  ctx.textAlign = align;
-  ctx.textBaseline = 'middle';
-
-  function wrappedText(text,font,size,y,lineHeight) {
-    ctx.font = `${size}px ${font}`;
-    const words = text.split(/\s+/);
-    const lines = [];
     let line = '';
-
-    for (const word of words) {
+    paragraph.split(/\s+/).forEach(word => {
       const test = line ? line + ' ' + word : word;
       if (ctx.measureText(test).width > maxWidth && line) {
         lines.push(line);
@@ -521,111 +735,202 @@ async function exportPng() {
       } else {
         line = test;
       }
-    }
-    if (line) lines.push(line);
-
-    lines.slice(0,6).forEach((lineText,index) => {
-      ctx.fillText(lineText,x,y + index * lineHeight,maxWidth);
     });
+    lines.push(line);
+  });
 
-    return y + Math.min(lines.length,6) * lineHeight;
+  if (lines.length > maxLines) {
+    lines = lines.slice(0,maxLines);
+    lines[maxLines-1] = lines[maxLines-1].replace(/[., ]*$/,'') + '…';
   }
 
-  ctx.font = 'bold 28px Arial';
-  ctx.textAlign = align;
-  ctx.fillText($('kicker').value.toUpperCase(),x,400,maxWidth);
+  lines.forEach((line,index) => ctx.fillText(line,x,y + index * lineHeight,maxWidth));
+  return y + lines.length * lineHeight;
+}
 
-  let y = 500;
+async function exportStory() {
+  const button = $('exportBtn');
+  if (button.disabled) return;
 
-  if (photoUrl) {
-    try {
+  button.disabled = true;
+  const originalLabel = button.textContent;
+  button.textContent = 'Story wird erstellt …';
+
+  try {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1920;
+    const ctx = canvas.getContext('2d');
+
+    const gradient = ctx.createLinearGradient(0,0,1080,1920);
+    gradient.addColorStop(0,colors[0]);
+    gradient.addColorStop(1,colors[1]);
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0,0,1080,1920);
+
+    ctx.globalAlpha = .45;
+    ctx.fillStyle = colors[1];
+    ctx.beginPath();
+    ctx.arc(1050,90,320,0,Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = colors[0];
+    ctx.beginPath();
+    ctx.arc(-20,1750,400,0,Math.PI*2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // Fester Außenrahmen der Story.
+    ctx.strokeStyle = colors[2];
+    ctx.globalAlpha = .18;
+    ctx.lineWidth = 3;
+    ctx.strokeRect(30,30,1020,1860);
+    ctx.globalAlpha = 1;
+
+    const align = 'center';
+    const x = 540;
+    const maxWidth = 900;
+    ctx.fillStyle = colors[2];
+    ctx.textAlign = align;
+    ctx.textBaseline = 'middle';
+
+    // Feste Kopfposition.
+    ctx.font = 'bold 28px Arial';
+    ctx.fillText($('kicker').value.toUpperCase(),x,290,maxWidth);
+
+    let y = 390;
+
+    // Foto mit korrektem Seitenverhältnis, ohne Streckung.
+    if (currentPhoto) {
       const img = new Image();
-      img.src = photoUrl;
+      img.src = currentPhoto;
       await img.decode();
 
-      const boxX = 150, boxY = 500, boxW = 780, boxH = 500;
-      let width, height, dx, dy;
+      const boxX = 150, boxY = 390, boxW = 780, boxH = 510;
+      let drawW,drawH,drawX,drawY;
 
-      if (photoFit === 'cover') {
-        const ratio = Math.max(boxW / img.width,boxH / img.height);
-        width = img.width * ratio;
-        height = img.height * ratio;
-        dx = boxX + (boxW - width) / 2;
-        dy = boxY + (boxH - height) / 2;
+      if (fitMode === 'cover') {
+        const ratio = Math.max(boxW/img.naturalWidth,boxH/img.naturalHeight);
+        drawW = img.naturalWidth * ratio;
+        drawH = img.naturalHeight * ratio;
+        drawX = boxX + (boxW-drawW)/2;
+        drawY = boxY + (boxH-drawH)/2;
       } else {
-        const ratio = Math.min(boxW / img.width,boxH / img.height);
-        width = img.width * ratio;
-        height = img.height * ratio;
-        dx = (1080 - width) / 2;
-        dy = boxY + (boxH - height) / 2;
+        const ratio = Math.min(boxW/img.naturalWidth,boxH/img.naturalHeight);
+        drawW = img.naturalWidth * ratio;
+        drawH = img.naturalHeight * ratio;
+        drawX = (1080-drawW)/2;
+        drawY = boxY + (boxH-drawH)/2;
+      }
+
+      if (frameMode === 'polaroid') {
+        ctx.fillStyle = '#fffdf9';
+        ctx.fillRect(drawX-16,drawY-16,drawW+32,drawH+48);
+      } else if (frameMode === 'classic') {
+        ctx.strokeStyle = colors[2];
+        ctx.lineWidth = 10;
+        ctx.strokeRect(boxX-5,boxY-5,boxW+10,boxH+10);
+      } else if (frameMode === 'double') {
+        ctx.strokeStyle = colors[2];
+        ctx.lineWidth = 5;
+        ctx.strokeRect(boxX-8,boxY-8,boxW+16,boxH+16);
+        ctx.lineWidth = 2;
+        ctx.strokeRect(boxX-19,boxY-19,boxW+38,boxH+38);
       }
 
       ctx.save();
       ctx.beginPath();
-      ctx.roundRect(
-        photoFit === 'cover' ? boxX : dx,
-        photoFit === 'cover' ? boxY : dy,
-        photoFit === 'cover' ? boxW : width,
-        photoFit === 'cover' ? boxH : height,
-        28
-      );
+      if (fitMode === 'cover') {
+        ctx.rect(boxX,boxY,boxW,boxH);
+      } else {
+        ctx.rect(drawX,drawY,drawW,drawH);
+      }
       ctx.clip();
-      ctx.drawImage(img,dx,dy,width,height);
+      ctx.drawImage(img,drawX,drawY,drawW,drawH);
       ctx.restore();
 
-      y = 1080;
-    } catch (error) {
-      console.error('Foto konnte nicht exportiert werden:',error);
+      y = 1010;
+    } else {
+      y = 670;
     }
-  }
 
-  if (sticker) {
+    if (currentSticker) {
+      ctx.font = '72px Arial';
+      ctx.fillStyle = colors[2];
+      ctx.fillText(currentSticker,x,y,maxWidth);
+      y += 75;
+    }
+
+    // Automatische Textgrößen-Anpassung an die verfügbare Fläche.
+    const bottomLimit = 1690;
+    const titleText = $('titleText').value;
+    const subText = $('subText').value;
+    let titleSize = 82;
+    let subSize = 34;
+
+    function estimateHeight(text,font,size,width,lineHeight) {
+      ctx.font = `${size}px ${font}`;
+      const words = String(text).split(/\s+/);
+      let lines = 1, line = '';
+      words.forEach(word => {
+        const test = line ? line + ' ' + word : word;
+        if (ctx.measureText(test).width > width && line) {
+          lines++;
+          line = word;
+        } else {
+          line = test;
+        }
+      });
+      return Math.min(lines,8)*lineHeight;
+    }
+
+    while (titleSize > 36 &&
+      estimateHeight(titleText,'Georgia',titleSize,maxWidth,titleSize*1.12) +
+      estimateHeight(subText,'Arial',subSize,maxWidth,subSize*1.3) +
+      y + 90 > bottomLimit) {
+      titleSize -= 2;
+      subSize = Math.max(24,subSize-1);
+    }
+
+    ctx.fillStyle = colors[2];
+    ctx.font = `${titleSize}px Georgia`;
+    y = wrapText(ctx,titleText,x,y+15,maxWidth,titleSize*1.12,7);
+
+    ctx.font = `${subSize}px Arial`;
+    wrapText(ctx,subText,x,y+35,maxWidth,subSize*1.35,5);
+
+    // Unveränderbare Website-Adresse im eigenen unteren Bereich.
+    ctx.fillStyle = colors[2];
+    ctx.globalAlpha = .92;
     ctx.textAlign = 'center';
-    ctx.font = '100px Arial';
-    ctx.fillText(sticker,left ? 160 : 540,y);
-    y += 95;
+    ctx.font = 'bold 27px Arial';
+    ctx.fillText('onlyscheli.com/storymaker',540,1850,950);
+    ctx.globalAlpha = 1;
+
+    const blob = await new Promise(resolve => canvas.toBlob(resolve,'image/png'));
+    if (!blob) throw new Error('PNG konnte nicht erstellt werden.');
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.download = 'storymaker-story.png';
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url),1500);
+  } catch (error) {
+    console.error(error);
+    alert('Der Export hat leider nicht funktioniert. Bitte versuche es noch einmal.');
+  } finally {
+    button.disabled = false;
+    button.textContent = originalLabel;
   }
-
-  ctx.textAlign = align;
-  const titleSize = Number($('fontSize').value) * 2.1;
-  y = wrappedText($('titleText').value,'Georgia',titleSize,y + 30,titleSize * 1.12);
-
-  ctx.font = '34px Arial';
-  y += 45;
-  wrappedText($('subText').value,'Arial',34,y,44);
-
-  ctx.globalAlpha = .65;
-  ctx.font = '20px Arial';
-  ctx.textAlign = 'left';
-  ctx.fillText('@yourhandle',75,1840);
-  ctx.textAlign = 'right';
-  ctx.fillText('made with storymaker ✿',1005,1840);
-  ctx.globalAlpha = 1;
-
-  const link = document.createElement('a');
-  link.download = 'storymaker-instagram-story.png';
-  link.href = canvas.toDataURL('image/png');
-  link.click();
 }
 
-['export','export2','topExport'].forEach(id => $(id).onclick = exportPng);
+$('exportBtn').addEventListener('click',exportStory);
+$('exportPreview').addEventListener('click',exportStory);
 
-$('reset').onclick = () => {
-  if (photoUrl) URL.revokeObjectURL(photoUrl);
-  photoUrl = '';
-  $('photoInput').value = '';
-  colors = ['#f3d9df','#faeee4','#5b3c43'];
-  sticker = '♡';
-  align = 'center';
-  $('kicker').value = presets.quote[0];
-  $('titleText').value = presets.quote[1];
-  $('subText').value = presets.quote[2];
-  $('fontSize').value = 44;
-  document.querySelector('[data-template="quote"]').click();
-  render();
-};
-
-render();
+populateTemplateSelect();
+loadDaily(currentDailyIndex);
 </script>
 </body>
 </html>
